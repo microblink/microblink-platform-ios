@@ -1,5 +1,13 @@
 # Transition Guide
 
+## v1.10.3
+### Breaking changes
+- Github organization and Swift package has been changed from `MicroblinkPlatform` to `microblink`:
+#### Old url:
+`https://github.com/MicroblinkPlatform/microblink-platform-ios`
+#### New url:
+`https://github.com/microblink/microblink-platform-ios` 
+
 ## v1.10.2
 - No changes
 

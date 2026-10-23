@@ -44,8 +44,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "MicroblinkPlatform",
-            url: "https://github.com/MicroblinkPlatform/microblink-platform-ios/releases/download/v1.10.2/MicroblinkPlatform.xcframework.zip",
-            checksum: "9f5a730799dfb6680b005086fc739f2aa76212eab152806ba1f88950482cdf8d"
+            url: "https://github.com/microblink/microblink-platform-ios/releases/download/v1.10.3/MicroblinkPlatform.xcframework.zip",
+            checksum: "376178b155b653417bd02803d6e69267a9d3710e2bef483af010bbfb902ba298"
         ),
         .binaryTarget(
             name: "BlinkIDVerifyUX",

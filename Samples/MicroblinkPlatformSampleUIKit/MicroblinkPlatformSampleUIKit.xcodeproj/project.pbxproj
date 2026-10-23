@@ -394,10 +394,10 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		79468ED230012FCD00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MicroblinkPlatform/microblink-platform-ios/";
+			repositoryURL = "https://github.com/microblink/microblink-platform-ios/";
 			requirement = {
 				kind = exactVersion;
-				version = 1.10.1;
+				version = 1.10.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
