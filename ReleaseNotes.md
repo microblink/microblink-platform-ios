@@ -1,5 +1,17 @@
 # Release notes
 
+## v1.10.3
+### Improvements
+- Improved accessibility support
+- Added optional `correlationId` in `MicroblinkPlatformServiceSettings`
+
+### Breaking changes
+- Github organization and Swift package has been changed from `MicroblinkPlatform` to `microblink`:
+#### Old url:
+`https://github.com/MicroblinkPlatform/microblink-platform-ios`
+#### New url:
+`https://github.com/microblink/microblink-platform-ios` 
+
 ## v1.10.2
 ### Improvements
 - Improved support for setting a custom localization in `MicroblinkPlatformTheme`:

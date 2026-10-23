@@ -608,6 +608,17 @@
         }
       }
     },
+    "mb-mp-form-optional-field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(optional)"
+          }
+        }
+      }
+    },
     "mb-mp-form-pdf-size-too-big-file" : {
       "extractionState" : "manual",
       "localizations" : {
