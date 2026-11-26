@@ -315,7 +315,10 @@ The engine requests camera permission when it is undetermined. For denied/restri
 
 ## Sample apps
 
-The [Samples](Samples) folder contains default SwiftUI and Custom UI apps.
+// The [Samples](Samples) folder contains default SwiftUI and Custom UI apps.
+// The [SwiftUI sample](Samples/MicroblinkPlatformSampleSwiftUI) demonstrates the v2 default UI with a backend-issued transaction token. Open `Samples/MicroblinkPlatformSampleSwiftUI/MicroblinkPlatformSampleSwiftUI.xcodeproj`; it uses the local Swift package at the root of this checkout.
+
+Paste a fresh `sdkConfiguration`, or enter the Agent API URL, client credentials, workflow ID, and user ID to create a test transaction. Transaction creation requires the processing/storage consent toggle; training consent is optional. Then choose **Start verification**. The sample handles completion and cancellation, displays the outcome and transaction ID after dismissal, and counts intermediate card events without retaining card data. It requires iOS 17 or later and links both Platform modules plus their scanner dependencies. See the [sample setup](Samples/MicroblinkPlatformSampleSwiftUI/README.md) for build and device-testing instructions.
 
 > [!WARNING]
 > For device testing, configure your signing team and obtain a transaction token for your workflow. Production apps should obtain tokens from their backend; transaction creation and consent remain host responsibilities.
@@ -394,3 +397,9 @@ func makeConfiguration(token: String) -> EngineConfiguration {
     )
 }
 ```
+
+<p align="center"><img src="Customizations/customization-1.jpg" alt="Customization 1" title="Customization 1"></p>
+<p align="center"><img src="Customizations/customization-2.jpg" alt="Customization 2" title="Customization 2"></p>
+<p align="center"><img src="Customizations/customization-3.jpg" alt="Customization 3" title="Customization 3"></p>
+<p align="center"><img src="Customizations/customization-4.jpg" alt="Customization 4" title="Customization 4"></p>
+<p align="center"><img src="Customizations/customization-5.jpg" alt="Customization 5" title="Customization 5"></p>
