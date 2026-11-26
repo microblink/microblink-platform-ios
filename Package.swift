@@ -4,12 +4,16 @@ import PackageDescription
 let package = Package(
     name: "MicroblinkPlatform",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v17)
     ],
     products: [
         .library(
             name: "MicroblinkPlatform",
             targets: ["MicroblinkPlatform"]
+        ),
+        .library(
+            name: "MicroblinkPlatformEngine",
+            targets: ["MicroblinkPlatformEngine"]
         ),
         .library(
             name: "BlinkIDVerifyUX",
@@ -28,56 +32,51 @@ let package = Package(
             targets: ["BlinkCard"]
         ),
         .library(
-            name: "IDLiveFaceCamera",
-            targets: ["IDLiveFaceCamera"]
+            name: "BiometricsSDK",
+            targets: ["BiometricsSDK"]
         ),
         .library(
-            name: "IDLiveFaceDetection",
-            targets: ["IDLiveFaceDetection"]
-        ),
-        .library(
-            name: "IDLiveFaceIAD",
-            targets: ["IDLiveFaceIAD"]
+            name: "BiometricsEngine",
+            targets: ["BiometricsEngine"]
         )
         
     ],
     targets: [
         .binaryTarget(
             name: "MicroblinkPlatform",
-            url: "https://github.com/microblink/microblink-platform-ios/releases/download/v1.10.3/MicroblinkPlatform.xcframework.zip",
-            checksum: "376178b155b653417bd02803d6e69267a9d3710e2bef483af010bbfb902ba298"
+            path: "Frameworks/MicroblinkPlatform.xcframework"
+        ),
+        .binaryTarget(
+            name: "MicroblinkPlatformEngine",
+            path: "Frameworks/MicroblinkPlatformEngine.xcframework"
         ),
         .binaryTarget(
             name: "BlinkIDVerifyUX",
-            url:"https://github.com/microblink/blinkid-verify-ios/releases/download/v3.21.1/BlinkIDVerifyUX.xcframework.zip",
-            checksum:"101bd12dca38252ce30273606581718ddcea7609b90dedabec57761089276859"
+            url:"https://github.com/microblink/blinkid-verify-ios/releases/download/v4000.0.3/BlinkIDVerifyUX.xcframework.zip",
+            checksum:"c4549ce7fe4f88f4beb6030857db841fc1b25450da05ebeb5b1231466923139e"
         ),
         .binaryTarget(
             name: "BlinkIDVerify",
-            url:"https://github.com/microblink/blinkid-verify-ios/releases/download/v3.21.1/BlinkIDVerify.xcframework.zip",
-            checksum:"46c26a6b9f13964d8147e619b45dbbdc788ab619c77faee44b59c0319cf157ee"
+            url:"https://github.com/microblink/blinkid-verify-ios/releases/download/v4000.0.3/BlinkIDVerify.xcframework.zip",
+            checksum:"e1e192de8ac5e9c2393fef70e86ac38bf13c4b3ea7a6bacbf0f27433f2247315"
         ),
         .binaryTarget(
             name: "BlinkCardUX",
-            url:"https://github.com/microblink/blinkcard-ios/releases/download/v3000.0.1/BlinkCardUX.xcframework.zip",
-            checksum:"bcd489b60fe6213aa3906333dbcbaf0fdf27464e4918a5c8f8ba635bb09430ef"
+            url:"https://github.com/microblink/blinkcard-ios/releases/download/v3001.0.2/BlinkCardUX.xcframework.zip",
+            checksum:"e8165435ec40d184ff89d470d9b019db6c85c59f1854c71a01e4816aef59d6f2"
         ),
         .binaryTarget(
             name: "BlinkCard",
-            url:"https://github.com/microblink/blinkcard-ios/releases/download/v3000.0.1/BlinkCard.xcframework.zip",
-            checksum:"ca0505a4301b512c4024e2869bc211865fc02263452d2809b101fa1b248480d5"
+            url:"https://github.com/microblink/blinkcard-ios/releases/download/v3001.0.2/BlinkCard.xcframework.zip",
+            checksum:"7839f453128987914e9318b9b532a51af573d540d1b779d0c970821a6d5dff55"
         ),
         .binaryTarget(
-            name: "IDLiveFaceCamera",
-            path: "Frameworks/IDLiveFaceCamera.xcframework"
+            name: "BiometricsSDK",
+            path: "Frameworks/BiometricsSDK.xcframework"
         ),
         .binaryTarget(
-            name: "IDLiveFaceDetection",
-            path: "Frameworks/IDLiveFaceDetection.xcframework"
-        ),
-        .binaryTarget(
-            name: "IDLiveFaceIAD",
-            path: "Frameworks/IDLiveFaceIAD.xcframework"
+            name: "BiometricsEngine",
+            path: "Frameworks/BiometricsEngine.xcframework"
         )
     ]
 )

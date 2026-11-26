@@ -1,0 +1,293 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios17.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name MicroblinkPlatform
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import AVFoundation
+import DeveloperToolsSupport
+import Foundation
+import MicroblinkPlatformEngine
+import PhotosUI
+import Swift
+import SwiftUI
+import UIKit
+import UniformTypeIdentifiers
+import _Concurrency
+import _PhotosUI_SwiftUI
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension SwiftUICore::Font {
+  public static var mbLargeTitle: SwiftUICore::Font {
+    get
+  }
+  public static var mbLargeTitleBold: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle1: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle1Bold: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle2: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle2Bold: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle3: SwiftUICore::Font {
+    get
+  }
+  public static var mbTitle3Semibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbHeadlineSemibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbBody: SwiftUICore::Font {
+    get
+  }
+  public static var mbCallout: SwiftUICore::Font {
+    get
+  }
+  public static var mbCalloutSemibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbSubhead: SwiftUICore::Font {
+    get
+  }
+  public static var mbSubheadSemibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbFootnote: SwiftUICore::Font {
+    get
+  }
+  public static var mbFootnoteSemibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbCaption1: SwiftUICore::Font {
+    get
+  }
+  public static var mbCaption1Semibold: SwiftUICore::Font {
+    get
+  }
+  public static var mbCaption2: SwiftUICore::Font {
+    get
+  }
+  public static var mbCaption2Semibold: SwiftUICore::Font {
+    get
+  }
+}
+extension SwiftUICore::Color {
+  public static var mbSystemBackground: SwiftUICore::Color {
+    get
+  }
+  public static var mbWhite: SwiftUICore::Color {
+    get
+  }
+  public static var mbAccent: SwiftUICore::Color {
+    get
+  }
+  public static var mbSecondarySystemFill: SwiftUICore::Color {
+    get
+  }
+  public static var mbTertiaryLabel: SwiftUICore::Color {
+    get
+  }
+  public static var mbSecondarySystemBackground: SwiftUICore::Color {
+    get
+  }
+  public static var mbTertiarySystemBackground: SwiftUICore::Color {
+    get
+  }
+  public static var mbSecondaryLabel: SwiftUICore::Color {
+    get
+  }
+  public static var mbPlaceholderText: SwiftUICore::Color {
+    get
+  }
+  public static var mbSeparator: SwiftUICore::Color {
+    get
+  }
+  public static var mbLabel: SwiftUICore::Color {
+    get
+  }
+  public static var mbError: SwiftUICore::Color {
+    get
+  }
+}
+
+public enum MicroblinkPlatform {
+  @_Concurrency::MainActor public static func view(configuration: MicroblinkPlatformEngine::EngineConfiguration, onEvent: @escaping (MicroblinkPlatform::MicroblinkPlatformEvent) -> Swift::Void) -> MicroblinkPlatform::MicroblinkPlatformView
+}
+@_Concurrency::MainActor @preconcurrency public struct MicroblinkPlatformView : SwiftUICore::View {
+  @_Concurrency::MainActor @preconcurrency public init(configuration: MicroblinkPlatformEngine::EngineConfiguration, onEvent: @escaping (MicroblinkPlatform::MicroblinkPlatformEvent) -> Swift::Void)
+  @_Concurrency::MainActor @preconcurrency public var body: some SwiftUICore::View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s18MicroblinkPlatform0aB4ViewV4bodyQrvp", 0) __
+}
+public struct MicroblinkPlatformResult : Swift::Equatable, Swift::Sendable {
+  public var transactionId: Swift::String?
+  public var outcome: MicroblinkPlatformEngine::SessionOutcome
+  public init(transactionId: Swift::String?, outcome: MicroblinkPlatformEngine::SessionOutcome)
+  public static func == (a: MicroblinkPlatform::MicroblinkPlatformResult, b: MicroblinkPlatform::MicroblinkPlatformResult) -> Swift::Bool
+}
+public struct MicroblinkPlatformCancelState : Swift::Equatable, Swift::Sendable {
+  public var transactionId: Swift::String?
+  public var reason: MicroblinkPlatformEngine::CancelReason
+  public init(transactionId: Swift::String?, reason: MicroblinkPlatformEngine::CancelReason)
+  public static func == (a: MicroblinkPlatform::MicroblinkPlatformCancelState, b: MicroblinkPlatform::MicroblinkPlatformCancelState) -> Swift::Bool
+}
+public enum MicroblinkPlatformEvent : Swift::Equatable, Swift::Sendable {
+  case finished(MicroblinkPlatform::MicroblinkPlatformResult)
+  case canceled(MicroblinkPlatform::MicroblinkPlatformCancelState)
+  case cardScanned(MicroblinkPlatformEngine::CardScanResult)
+  public static func == (a: MicroblinkPlatform::MicroblinkPlatformEvent, b: MicroblinkPlatform::MicroblinkPlatformEvent) -> Swift::Bool
+}
+@_Concurrency::MainActor final public class MicroblinkPlatformTheme {
+  @_Concurrency::MainActor public static let shared: MicroblinkPlatform::MicroblinkPlatformTheme
+  @_Concurrency::MainActor public init()
+  @_Concurrency::MainActor final public var backgroundColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var accentColor: SwiftUICore::Color {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var titleColor: SwiftUICore::Color {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var subtitleColor: SwiftUICore::Color {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var errorColor: SwiftUICore::Color {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScannerAppearance: MicroblinkPlatformEngine::DocumentScanAppearance
+  @_Concurrency::MainActor final public var cardScannerAppearance: MicroblinkPlatformEngine::CardScanAppearance
+  @_Concurrency::MainActor final public var faceCaptureAppearance: MicroblinkPlatformEngine::FaceCaptureAppearance
+  @_Concurrency::MainActor final public var primaryColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var mainScreenMainImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var verifySuccessImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var verifyReviewImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var verifyErrorImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var cameraPermissionIcon: SwiftUICore::Image
+  @_Concurrency::MainActor final public var loadingFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var mainScreenTitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var mainScreenSubtitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var mainScreenTitleColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var mainScreenSubtitleColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var mainScreenAdditionalStepsFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var errorFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var errorSubtitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var cameraPermissionFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var cameraPermissionSubtitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var mainButtonFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var verifyTitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var verifySubtitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var buttonCornerRadius: Swift::Double
+  @_Concurrency::MainActor final public var localizationBundle: Foundation::Bundle?
+  @_Concurrency::MainActor final public var localizationTableName: Swift::String?
+  @_Concurrency::MainActor final public var documentUploadTitleColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadTitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadDescriptionColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadDescriptionFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadSelectDocumentColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadSelectDocumentFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadSelectDocumentPickerColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadSelectDocumentPickerFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadSelectedDocumentTypeTitleColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadSelectedDocumentTypeTitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadSelectedDocumentTypeDescriptionColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadSelectedDocumentTypeDescriptionFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadPlaceholderImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var documentUploadPlaceholderTitleColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadPlaceholderTitleFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadPlaceholderDescriptionColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadPlaceholderDescriptionFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadRemoveFileImage: SwiftUICore::Image
+  @_Concurrency::MainActor final public var documentUploadSubmitButtonDisabledColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadSizeErrorFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadSizeErrorColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadDoubleSideViewFont: SwiftUICore::Font
+  @_Concurrency::MainActor final public var documentUploadDoubleSideViewTextColor: SwiftUICore::Color
+  @_Concurrency::MainActor final public var documentUploadDoubleSideViewBackgroundColor: SwiftUICore::Color
+  @objc deinit
+}
+extension MicroblinkPlatform::MicroblinkPlatformTheme {
+  @_Concurrency::MainActor final public var documentScanAlertTitleColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertTitleFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertDescriptionColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertDescriptionFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertButtonColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertButtonFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanAlertBackgroundColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetTitleColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetTitleFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetDescriptionColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetDescriptionFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetButtonColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetButtonFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetPageIndicatorColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanOnboardingSheetBackgroundColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanReticleTooltipFont: SwiftUICore::Font? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanHelpButtonForegroundColor: SwiftUICore::Color? {
+    get
+    set
+  }
+  @_Concurrency::MainActor final public var documentScanHelpButtonBackgroundColor: SwiftUICore::Color? {
+    get
+    set
+  }
+}
+extension MicroblinkPlatform::MicroblinkPlatformView : Swift::Sendable {}
+extension MicroblinkPlatform::MicroblinkPlatformTheme : Swift::Sendable {}
