@@ -315,13 +315,16 @@ The engine requests camera permission when it is undetermined. For denied/restri
 
 ## Sample apps
 
-// The [Samples](Samples) folder contains default SwiftUI and Custom UI apps.
-// The [SwiftUI sample](Samples/MicroblinkPlatformSampleSwiftUI) demonstrates the v2 default UI with a backend-issued transaction token. Open `Samples/MicroblinkPlatformSampleSwiftUI/MicroblinkPlatformSampleSwiftUI.xcodeproj`; it uses the local Swift package at the root of this checkout.
+Both samples use the local Swift package at the root of this checkout:
 
-Paste a fresh `sdkConfiguration`, or enter the Agent API URL, client credentials, workflow ID, and user ID to create a test transaction. Transaction creation requires the processing/storage consent toggle; training consent is optional. Then choose **Start verification**. The sample handles completion and cancellation, displays the outcome and transaction ID after dismissal, and counts intermediate card events without retaining card data. It requires iOS 17 or later and links both Platform modules plus their scanner dependencies. See the [sample setup](Samples/MicroblinkPlatformSampleSwiftUI/README.md) for build and device-testing instructions.
+| Sample | Integration |
+| --- | --- |
+| [MicroblinkPlatformSampleSwiftUI](Samples/MicroblinkPlatformSampleSwiftUI) | Default UI through `MicroblinkPlatform`, backed by `MicroblinkPlatformEngine` |
+| [MicroblinkPlatformSampleCustomUI](Samples/MicroblinkPlatformSampleCustomUI) | Custom workflow screens using only `MicroblinkPlatformEngine`; see the [custom sample setup](Samples/MicroblinkPlatformSampleCustomUI/README.md) |
 
-> [!WARNING]
-> For device testing, configure your signing team and obtain a transaction token for your workflow. Production apps should obtain tokens from their backend; transaction creation and consent remain host responsibilities.
+Open the matching `.xcodeproj` inside each sample folder. Paste a fresh `sdkConfiguration`, or use `AgentTokenClient` and `AgentTransactionForm` to create a test transaction with your Agent API URL, client credentials, workflow ID, and user ID. Transaction creation requires the processing/storage consent toggle; training consent is optional. Then choose **Start verification**. Both samples handle completion/cancellation and count intermediate card events without retaining card data.
+
+The samples require iOS 17 or later and include scanner dependencies. For device testing, configure your signing team and use a workflow with valid scanner licenses. Production apps obtain tokens from their backend; transaction creation and consent remain host responsibilities.
 
 ## Changing default strings
 
