@@ -11,9 +11,9 @@
 		79468EB530012F8F00596FED /* BlinkCardUX in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EB430012F8F00596FED /* BlinkCardUX */; };
 		79468EB730012F8F00596FED /* BlinkIDVerify in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EB630012F8F00596FED /* BlinkIDVerify */; };
 		79468EB930012F8F00596FED /* BlinkIDVerifyUX in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EB830012F8F00596FED /* BlinkIDVerifyUX */; };
-		79468EBB30012F8F00596FED /* IDLiveFaceCamera in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBA30012F8F00596FED /* IDLiveFaceCamera */; };
-		79468EBD30012F8F00596FED /* IDLiveFaceDetection in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBC30012F8F00596FED /* IDLiveFaceDetection */; };
-		79468EBF30012F8F00596FED /* IDLiveFaceIAD in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBE30012F8F00596FED /* IDLiveFaceIAD */; };
+		79468EBB30012F8F00596FED /* BiometricsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBA30012F8F00596FED /* BiometricsSDK */; };
+		79468EBD30012F8F00596FED /* BiometricsEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBC30012F8F00596FED /* BiometricsEngine */; };
+		79468EBF30012F8F00596FED /* MicroblinkPlatformEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EBE30012F8F00596FED /* MicroblinkPlatformEngine */; };
 		79468EC130012F8F00596FED /* MicroblinkPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 79468EC030012F8F00596FED /* MicroblinkPlatform */; };
 /* End PBXBuildFile section */
 
@@ -34,14 +34,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79468EBD30012F8F00596FED /* IDLiveFaceDetection in Frameworks */,
+				79468EBD30012F8F00596FED /* BiometricsEngine in Frameworks */,
 				79468EC130012F8F00596FED /* MicroblinkPlatform in Frameworks */,
-				79468EBF30012F8F00596FED /* IDLiveFaceIAD in Frameworks */,
+				79468EBF30012F8F00596FED /* MicroblinkPlatformEngine in Frameworks */,
 				79468EB530012F8F00596FED /* BlinkCardUX in Frameworks */,
 				79468EB330012F8F00596FED /* BlinkCard in Frameworks */,
 				79468EB930012F8F00596FED /* BlinkIDVerifyUX in Frameworks */,
 				79468EB730012F8F00596FED /* BlinkIDVerify in Frameworks */,
-				79468EBB30012F8F00596FED /* IDLiveFaceCamera in Frameworks */,
+				79468EBB30012F8F00596FED /* BiometricsSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,9 +88,9 @@
 				79468EB430012F8F00596FED /* BlinkCardUX */,
 				79468EB630012F8F00596FED /* BlinkIDVerify */,
 				79468EB830012F8F00596FED /* BlinkIDVerifyUX */,
-				79468EBA30012F8F00596FED /* IDLiveFaceCamera */,
-				79468EBC30012F8F00596FED /* IDLiveFaceDetection */,
-				79468EBE30012F8F00596FED /* IDLiveFaceIAD */,
+				79468EBA30012F8F00596FED /* BiometricsSDK */,
+				79468EBC30012F8F00596FED /* BiometricsEngine */,
+				79468EBE30012F8F00596FED /* MicroblinkPlatformEngine */,
 				79468EC030012F8F00596FED /* MicroblinkPlatform */,
 			);
 			productName = MicroblinkPlatformSampleSwiftUI;
@@ -122,7 +122,7 @@
 			mainGroup = 43EA96172D95849000A54E45;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */,
+				79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 43EA96212D95849000A54E45 /* Products */;
@@ -207,7 +207,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -215,6 +215,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -264,12 +265,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -282,7 +284,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MicroblinkPlatformSampleSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CQTJWP89J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera for document and face capture.";
@@ -291,6 +293,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,8 +306,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -316,7 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MicroblinkPlatformSampleSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CQTJWP89J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera for document and face capture.";
@@ -325,6 +328,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -337,8 +341,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -365,56 +369,52 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/microblink/microblink-platform-ios/";
-			requirement = {
-				kind = exactVersion;
-				version = 1.10.3;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		79468EB230012F8F00596FED /* BlinkCard */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
 			productName = BlinkCard;
 		};
 		79468EB430012F8F00596FED /* BlinkCardUX */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
 			productName = BlinkCardUX;
 		};
 		79468EB630012F8F00596FED /* BlinkIDVerify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
 			productName = BlinkIDVerify;
 		};
 		79468EB830012F8F00596FED /* BlinkIDVerifyUX */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
 			productName = BlinkIDVerifyUX;
 		};
-		79468EBA30012F8F00596FED /* IDLiveFaceCamera */ = {
+		79468EBA30012F8F00596FED /* BiometricsSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
-			productName = IDLiveFaceCamera;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
+			productName = BiometricsSDK;
 		};
-		79468EBC30012F8F00596FED /* IDLiveFaceDetection */ = {
+		79468EBC30012F8F00596FED /* BiometricsEngine */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
-			productName = IDLiveFaceDetection;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
+			productName = BiometricsEngine;
 		};
-		79468EBE30012F8F00596FED /* IDLiveFaceIAD */ = {
+		79468EBE30012F8F00596FED /* MicroblinkPlatformEngine */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
-			productName = IDLiveFaceIAD;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
+			productName = MicroblinkPlatformEngine;
 		};
 		79468EC030012F8F00596FED /* MicroblinkPlatform */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79468EB130012F8F00596FED /* XCRemoteSwiftPackageReference "microblink-platform-ios" */;
+			package = 79468EB130012F8F00596FED /* XCLocalSwiftPackageReference "../.." */;
 			productName = MicroblinkPlatform;
 		};
 /* End XCSwiftPackageProductDependency section */

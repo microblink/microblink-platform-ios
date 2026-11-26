@@ -1,104 +1,145 @@
 import MicroblinkPlatform
+import MicroblinkPlatformEngine
 import SwiftUI
 
+@MainActor
 struct ContentView: View {
-    @State private var showSDK = false
+    @State private var sdkConfiguration = ""
+    @State private var activeFlow: VerificationFlow?
+    @State private var outcomeMessage: String?
+    @State private var transactionId: String?
+    @State private var scannedCardCount = 0
+    @State private var isCreatingTransaction = false
+    @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        Button("Start SDK") {
-            showSDK = true
-        }
-        .fullScreenCover(isPresented: $showSDK) {
-#warning ("Please replace with your own workflowId and authProviderHost! authProviderHost URL also depends on the region: https://platform.docs.microblink.com/platform-api/overview/")
-#warning ("Please check documentation: https://github.com/microblink/microblink-platform-ios/tree/main?tab=readme-ov-file#microblinkplatform-server-compatibility")
-            MicroblinkPlatformWrapperView(
-                workflowId: "686672a5f544c6f7456830b9",
-                url: "https://api.us-east.platform.microblink.com/proxy/api/v1",
-                additionalRequestHeaders: nil
-            ) { result in
-                showSDK = false
-            } onClose: {
-                showSDK = false
+        NavigationStack {
+            Form {
+                Section {
+                    Text("Create a test transaction below, or paste an sdkConfiguration token from your backend. Consent for an existing token must already have been collected when its transaction was created.")
+                    Text("Use a new transaction token for each verification. If consent is declined, do not create a transaction or start the SDK.")
+                        .foregroundStyle(.secondary)
+                } header: {
+                    Text("Before you start")
+                }
+
+                AgentTransactionForm(isCreating: $isCreatingTransaction, isFieldFocused: $isInputFocused) { token in
+                    sdkConfiguration = token
+                }
+
+                Section {
+                    TextField("sdkConfiguration", text: $sdkConfiguration, axis: .vertical)
+                        .lineLimit(4...8)
+                        .font(.body.monospaced())
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .keyboardType(.asciiCapable)
+                        .focused($isInputFocused)
+                        .accessibilityLabel("SDK configuration token")
+                        .privacySensitive()
+
+                    Button("Start verification", action: startVerification)
+                        .disabled(sdkConfiguration.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                } header: {
+                    Text("Transaction token")
+                } footer: {
+                    Text("The token is used only for this flow and is not saved by the sample.")
+                }
+                .disabled(isCreatingTransaction)
+
+                if let outcomeMessage {
+                    Section("Last verification") {
+                        Text(outcomeMessage)
+                        if let transactionId {
+                            Text("Transaction: \(transactionId)")
+                                .textSelection(.enabled)
+                        }
+                        if scannedCardCount > 0 {
+                            Text("Card scan events: \(scannedCardCount)")
+                        }
+                    }
+                }
             }
+            .navigationTitle("Platform SDK v2")
+            .scrollDismissesKeyboard(.interactively)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { isInputFocused = false }
+                }
+            }
+        }
+        .fullScreenCover(item: $activeFlow) { flow in
+            MicroblinkPlatform.view(configuration: flow.configuration) { event in
+                handle(event, flowId: flow.id)
+            }
+            .id(flow.id)
+            .interactiveDismissDisabled()
+        }
+    }
+
+    private func startVerification() {
+        let token = sdkConfiguration.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !token.isEmpty, activeFlow == nil, !isCreatingTransaction else { return }
+        isInputFocused = false
+        outcomeMessage = nil
+        transactionId = nil
+        scannedCardCount = 0
+        activeFlow = VerificationFlow(configuration: EngineConfiguration(
+            service: ServiceSettings(sdkConfiguration: token)
+        ))
+        sdkConfiguration = ""
+    }
+
+    private func handle(_ event: MicroblinkPlatformEvent, flowId: UUID) {
+        guard activeFlow?.id == flowId else { return }
+        switch event {
+        case .finished(let result):
+            transactionId = result.transactionId
+            switch result.outcome {
+            case .verification(let identifier, let state):
+                transactionId = identifier
+                outcomeMessage = verificationMessage(state)
+            case .canceled(let outcome):
+                transactionId = outcome.transactionId
+                outcomeMessage = cancellationMessage(outcome.reason)
+            @unknown default:
+                outcomeMessage = "Verification finished with an unrecognized outcome."
+            }
+            activeFlow = nil
+        case .canceled(let state):
+            transactionId = state.transactionId
+            outcomeMessage = cancellationMessage(state.reason)
+            activeFlow = nil
+        case .cardScanned:
+            // Intermediate output: keep the flow open. This sample does not retain card data.
+            scannedCardCount += 1
+        @unknown default:
+            break
+        }
+    }
+
+    private func verificationMessage(_ state: VerificationState) -> String {
+        switch state {
+        case .accept: return "Verification accepted."
+        case .reject: return "Verification rejected."
+        case .review: return "Verification requires review."
+        @unknown default: return "Verification returned an unrecognized state."
+        }
+    }
+
+    private func cancellationMessage(_ reason: CancelReason) -> String {
+        switch reason {
+        case .userCanceled: return "Verification canceled."
+        case .unsupportedWorkflowVersion: return "Update the workflow on the platform before starting a new transaction."
+        @unknown default: return "Verification canceled with an unrecognized reason."
         }
     }
 }
 
-struct MicroblinkPlatformWrapperView: UIViewControllerRepresentable {
-    let workflowId: String
-    let url: String
-    let additionalRequestHeaders: [String: String]?
-
-    var onCompletion: (MicroblinkPlatformResult) -> Void
-    var onClose: () -> Void
-
-    init(workflowId: String, url: String, additionalRequestHeaders: [String : String]? = nil, onCompletion: @escaping (MicroblinkPlatformResult) -> Void, onClose: @escaping () -> Void) {
-        self.workflowId = workflowId
-        self.url = url
-        self.additionalRequestHeaders = additionalRequestHeaders
-        self.onCompletion = onCompletion
-        self.onClose = onClose
-    }
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-#warning ("Please replace with your own userId!")
-        let consent = MicroblinkPlatformConsent(
-            userId: "microblink-public-sample-app-ios-user-id",
-            isProcessingStoringAllowed: true,
-            isTrainingAllowed: true,
-            isGivenOn: Date.now,
-            note: nil
-        )
-        
-        let serviceSettings = MicroblinkPlatformServiceSettings(
-            workflowId: workflowId,
-            url: url,
-            consent: consent,
-            additionalRequestHeaders: additionalRequestHeaders
-        )
-
-        let microblinkPlatform = MicroblinkPlatformSDK(
-            serviceSettings: serviceSettings,
-            delegate: context.coordinator
-        )
-
-        return microblinkPlatform.startSDK()
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onCompletion: onCompletion, onClose: onClose)
-    }
-
-    class Coordinator: NSObject, MicroblinkPlatformSDKDelegate {
-        var onCompletion: (MicroblinkPlatformResult) -> Void
-        var onClose: () -> Void
-
-        init(onCompletion: @escaping (MicroblinkPlatformResult) -> Void, onClose: @escaping () -> Void) {
-            self.onCompletion = onCompletion
-            self.onClose = onClose
-        }
-
-        func microblinkPlatformSDKDidFinish(viewController: UIViewController, result: MicroblinkPlatformResult) {
-            print("Sample microblinkPlatformSDKDidFinish: \(result)")
-            viewController.dismiss(animated: true) {
-                self.onCompletion(result)
-            }
-        }
-
-        func microblinkPlatformSDKDidClose(viewController: UIViewController, cancelState: MicroblinkPlatformCancelState) {
-            print("Sample microblinkPlatformSDKDidClose")
-            viewController.dismiss(animated: true) {
-                self.onClose()
-            }
-        }
-        
-        func microblinkPlatformSDKDidFinishCardScanStep(viewController: UIViewController, cardScanResult: MicroblinkPlatformResultCardScanResult) {
-            print("Sample microblinkPlatformSDKDidFinish: \(cardScanResult)")
-        }
-    }
+private struct VerificationFlow: Identifiable {
+    let id = UUID()
+    let configuration: EngineConfiguration
 }
 
 #Preview {
