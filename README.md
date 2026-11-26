@@ -6,15 +6,16 @@
 [![Swift Package Manager Compatible](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange)
 
 # MicroblinkPlatform SDK for iOS
+
 Microblink Platform iOS SDK runs identity verification workflows with document scanning, guided face capture, payment card scanning, forms, and document uploads. V2 provides two integration options: the default SwiftUI experience in `MicroblinkPlatform`, or your own screens backed by `MicroblinkPlatformEngine`.
 
 ## Table of Contents
+
 - [Requirements](#requirements)
 - [MicroblinkPlatform Server compatibility](#microblinkplatform-server-compatibility)
 - [SDK integration](#sdk-integration)
   - [Swift Package Manager](#swift-package-manager)
   - [Clone](#clone)
-  - [UIKit](#uikit)
   - [SwiftUI](#swiftui)
   - [Engine only (custom UI)](#engine-only-custom-ui)
     - [Own the session](#own-the-session)
@@ -28,7 +29,7 @@ Microblink Platform iOS SDK runs identity verification workflows with document s
 ## Requirements
 
 - iOS 17.0 or later.
--  `NSCameraUsageDescription` in your app's Info.plist, explaining why the app needs camera access. Both integration options require this. 
+- `NSCameraUsageDescription` in your app's Info.plist, explaining why the app needs camera access. Both integration options require this.
 
 ## MicroblinkPlatform Server compatibility
 
@@ -54,12 +55,19 @@ Both options use the engine's vendor scanner UI, including Biometrics guided fac
 
 1. In Xcode, choose **File > Add Package Dependencies**.
 2. Enter [the package repository](https://github.com/microblink/microblink-platform-ios.git).
-3. Select **Exact Version**, add latest released version
-4. For using default UI, link `MicroblinkPlatform`, `MicroblinkPlatformEngine` and dependencies. For custom UI link `MicroblinkPlatformEngine` and dependencies. 
+3. Select **Exact Version** and the v2 release you intend to integrate. These APIs are not available in v1 packages.
+4. Add the products for your integration:
+
+| Products | Default UI | Engine only |
+| --- | --- | --- |
+| `MicroblinkPlatform` | Required | Not used |
+| `MicroblinkPlatformEngine` | Required | Required |
+| `BlinkIDVerifyUX`, `BlinkIDVerify`, `BlinkCardUX`, `BlinkCard` | Required | Required |
+| `BiometricsSDK`, `BiometricsEngine` | Required for face capture | Required for face capture |
 
 ### Clone
 
-If you prefer manual integration, clone [this repository](https://github.com/microblink/microblink-platform-ios.git) and use artifacts.
+For manual integration, clone [this repository](https://github.com/microblink/microblink-platform-ios.git) and use the XCFrameworks in [Frameworks](Frameworks) from the matching v2 release. You can also open the included sample projects directly to use the checkout as a local Swift package.
 
 For v2, link and embed `MicroblinkPlatformEngine.xcframework`; also link and embed `MicroblinkPlatform.xcframework` for default UI. Include the matching scanner dependencies and their resources:
 
@@ -71,7 +79,9 @@ Embed and sign dynamic frameworks in the host app and retain dependency resource
 
 ### SwiftUI
 
-Present a new `VerificationFlow` in a `fullScreenCover` after obtaining the transaction token. V2 does not need a `UIViewControllerRepresentable` wrapper.
+Present a new `VerificationFlow` in a `fullScreenCover` after obtaining the transaction token. The SDK starts and retains its engine session, renders workflow screens, and binds scanner presentation automatically. Create a new view identity for each transaction, as the [default sample's ContentView](Samples/MicroblinkPlatformSampleSwiftUI/MicroblinkPlatformSampleSwiftUI/ContentView.swift) does with an identifiable flow. Do not replace the token inside an already-running flow.
+
+UIKit hosts can present the same `MicroblinkPlatform.view(configuration:onEvent:)` in a full-screen `UIHostingController` and dismiss it on terminal events. A `UIViewControllerRepresentable` wrapper is not needed for SwiftUI hosts.
 
 ```swift
 import MicroblinkPlatform
@@ -110,7 +120,7 @@ struct VerificationFlow: View {
 }
 ```
 
-Both default UI examples handle the same events:
+The default UI reports these events:
 
 | Event | Host behavior |
 | --- | --- |
@@ -124,7 +134,7 @@ The default UI shows Home before each ready step, including forms and uploads. S
 
 ### Engine only (custom UI)
 
-Import `MicroblinkPlatformEngine` without `MicroblinkPlatform`. Your app renders the workflow and collects host input; the engine handles Edge requests, validation, scanner capture, and feedback submission. Use `StepResult` for navigation and `EngineStatus` only for transient activity, including upload percentage. Sessions and the adapter below are main-actor isolated.
+Import `MicroblinkPlatformEngine` without `MicroblinkPlatform`. The [custom sample](Samples/MicroblinkPlatformSampleCustomUI) is a complete reference for host-owned workflow screens, input drafts, and scanner styling. Your app renders the workflow and collects host input; the engine handles Edge requests, validation, scanner capture, and feedback submission. Use `StepResult` for navigation and `EngineStatus` only for transient activity, including upload percentage.
 
 #### Own the session
 
@@ -155,12 +165,9 @@ final class EngineVerificationModel: ObservableObject {
 
     deinit { statusTask?.cancel() }
 
-    func start(token: String) async {
+    func start(configuration: EngineConfiguration) async {
         guard !didStart, !isClosed else { return }
         didStart = true
-        let configuration = EngineConfiguration(
-            service: ServiceSettings(sdkConfiguration: token)
-        )
         switch await MicroblinkPlatformEngine.startSession(configuration) {
         case .failure(let error):
             if !isClosed { startError = error }
@@ -223,7 +230,7 @@ final class EngineVerificationModel: ObservableObject {
 }
 ```
 
-`startSession` already performs the first Edge resume. Process `SessionStart.first`; do not call `next(.none)` immediately just because startup succeeded. Invalid tokens return `SessionStartError`; network/workflow failures after startup arrive as `StepResult.failed` on the returned session.
+`startSession` already performs the first Edge resume. Process `SessionStart.first`; do not call `next(.none)` immediately just because startup succeeded. Invalid tokens and incompatible workflow versions return `SessionStartError` without a session. A successful `startSession` can still return `.failed` as its `first` result; inspect that result and its retry action before advancing.
 
 #### Bind scanner presentation
 
@@ -232,16 +239,16 @@ Keep the model and `.scannerPresentation(_:)` on a stable root view for the enti
 ```swift
 @MainActor
 struct EngineVerificationHost<Content: View>: View {
-    let token: String
+    let configuration: EngineConfiguration
     private let content: (EngineVerificationModel) -> Content
     @StateObject private var model: EngineVerificationModel
 
     init(
-        token: String,
+        configuration: EngineConfiguration,
         onCardScanned: @escaping (CardScanResult) -> Void,
         @ViewBuilder content: @escaping (EngineVerificationModel) -> Content
     ) {
-        self.token = token
+        self.configuration = configuration
         self.content = content
         _model = StateObject(wrappedValue: EngineVerificationModel(onCardScanned: onCardScanned))
     }
@@ -249,11 +256,13 @@ struct EngineVerificationHost<Content: View>: View {
     var body: some View {
         content(model)
             .scannerPresentation(model.scannerPresentation)
-            .task { await model.start(token: token) }
+            .task { await model.start(configuration: configuration) }
             .interactiveDismissDisabled()
     }
 }
 ```
+
+Pass `EngineConfiguration(service: ServiceSettings(sdkConfiguration: token))` to the host, optionally supplying `scannerAppearance` as shown in [Customizing the look](#customizing-the-look). Keep one host/model per transaction.
 
 In your Close button, await `model.close()` before dismissing the custom flow and handle its optional cancellation outcome. Closing during startup is also handled: a session that arrives later is canceled. For a finished result, deliver `SessionOutcome` and dismiss when your result UI is acknowledged. Route every exit through this lifecycle; simply releasing the model or cancelling the task awaiting `next` does not cancel the backend session. Do not cancel on every `onDisappear`, because presenting a scanner can temporarily cover the host view. Disable submission/continue actions while `isAdvancing` is true, but keep an explicit cancellation action available.
 
@@ -269,7 +278,7 @@ While `result` and `startError` are both `nil`, show your startup UI. If `startE
 | `.failed` | Show validation, transport, or workflow feedback | Follow `recoverable` and `retryAction` as described below |
 | `.finished` | Show/deliver the actual `SessionOutcome` (`accept`, `reject`, `review`, or cancellation) | Acknowledge and dismiss; do not call `next` again |
 
-Use `workflow.steps`, `currentStepId`, and `completedStepIds` to update your overview after each ready result. Go directly to your result screen on `.finished`. Engine does not render HomeScreen or ResultScreen for custom hosts. Consume `lastStepOutput` from both `.ready` and `.finished`; the adapter forwards `.cardScan` once per returned result, without deduplicating separate scans with identical card values.
+Use `workflow.steps`, `workflow.currentStepId`, and `workflow.completedStepIds` to update your overview after each ready result. Go directly to your result screen on `.finished`. Engine does not render HomeScreen or ResultScreen for custom hosts. Consume `lastStepOutput` from both `.ready` and `.finished`; the adapter forwards `.cardScan` once per returned result, without deduplicating separate scans with identical card values.
 
 | `InputRequest` | Build this UI | Submit through `model.advance` |
 | --- | --- | --- |
@@ -320,15 +329,24 @@ Both samples use the local Swift package at the root of this checkout:
 | Sample | Integration |
 | --- | --- |
 | [MicroblinkPlatformSampleSwiftUI](Samples/MicroblinkPlatformSampleSwiftUI) | Default UI through `MicroblinkPlatform`, backed by `MicroblinkPlatformEngine` |
-| [MicroblinkPlatformSampleCustomUI](Samples/MicroblinkPlatformSampleCustomUI) | Custom workflow screens using only `MicroblinkPlatformEngine`; see the [custom sample setup](Samples/MicroblinkPlatformSampleCustomUI/README.md) |
+| [MicroblinkPlatformSampleCustomUI](Samples/MicroblinkPlatformSampleCustomUI) | Custom workflow screens using only `MicroblinkPlatformEngine` |
 
-Open the matching `.xcodeproj` inside each sample folder. Paste a fresh `sdkConfiguration`, or use `AgentTokenClient` and `AgentTransactionForm` to create a test transaction with your Agent API URL, client credentials, workflow ID, and user ID. Transaction creation requires the processing/storage consent toggle; training consent is optional. Then choose **Start verification**. Both samples handle completion/cancellation and count intermediate card events without retaining card data.
+Open the matching `.xcodeproj` inside each sample folder and select its app scheme. Both projects use the local package. They currently share a bundle identifier; assign different bundle IDs in Xcode if you want to install both apps on the same device.
+
+To start a transaction:
+
+1. Paste an existing `sdkConfiguration`, or enter an Agent API base URL ending in `/agent/api/v2`, client ID, client secret, workflow ID, and user ID. The sample appends `/transaction` when creating a transaction; user ID starts as an editable UUID.
+2. For creation in the sample, set **Allow processing and storage (required)** and **Allow training (optional)** to reflect the user's consent, then choose **Create transaction**. The client validates required consent before sending the request and includes `platform: "iOS"` and a current `givenOn` timestamp. The returned token populates the token field, and the consent toggles reset. Pasted tokens must already represent transactions created with consent.
+3. Choose **Start verification**. Both samples disable startup during transaction creation, create a fresh flow per token, handle completion/cancellation, and count intermediate card events without retaining card data. Tokens and credentials are kept in memory only.
+
+> [!IMPORTANT]
+> `AgentTokenClient` and `AgentTransactionForm` are sample code, not SDK APIs. The default sample's [ContentView](Samples/MicroblinkPlatformSampleSwiftUI/MicroblinkPlatformSampleSwiftUI/ContentView.swift) presents `MicroblinkPlatform.view`. The custom sample's [ContentView](Samples/MicroblinkPlatformSampleCustomUI/MicroblinkPlatformSampleCustomUI/ContentView.swift) presents its own [CustomFlowView](Samples/MicroblinkPlatformSampleCustomUI/MicroblinkPlatformSampleCustomUI/Flow/CustomFlowView.swift), backed by [CustomFlowModel](Samples/MicroblinkPlatformSampleCustomUI/MicroblinkPlatformSampleCustomUI/Flow/CustomFlowModel.swift). Its `StudioEvent` type is a sample host callback, not `MicroblinkPlatformEvent` or an engine API.
 
 The samples require iOS 17 or later and include scanner dependencies. For device testing, configure your signing team and use a workflow with valid scanner licenses. Production apps obtain tokens from their backend; transaction creation and consent remain host responsibilities.
 
 ## Changing default strings
 
-Use the `mb-mp-` keys from the `Localizable.xcstrings` catalog to override default UI text in your app. You can override only the keys you need; missing host keys fall back to the framework catalog, then to the English fallback.
+Use the `mb-mp-` keys from the [Localizable.xcstrings catalog](Localization/Localizable.xcstrings) to override default UI text in your app. You can override only the keys you need; missing host keys fall back to the framework catalog, then to the English fallback.
 
 Configure the theme on the main actor before creating the SDK view:
 
@@ -344,7 +362,7 @@ func configurePlatformStrings() {
 }
 ```
 
-Scanner localization is separate. `ScannerAppearance.localizationTableName` is forwarded to the scanner SDKs. BlinkCard supports `CardScanAppearance.localizationBundle`, `localizationTableName`, and `language`; its table override takes precedence over the shared table. The current document and face integrations do not expose a host localization bundle, so a shared table name alone does not activate host translations for those scanners. Engine-only hosts localize their own workflow screens.
+Scanner localization is separate. `ScannerAppearance.localizationTableName` is forwarded to the scanner SDKs. BlinkCard supports `CardScanAppearance.localizationBundle`, `localizationTableName`, and `language`; its table override takes precedence over the shared table. The current document and face integrations do not expose a host localization bundle, so a shared table name alone does not activate host translations for those scanners. Engine-only hosts localize their own workflow screens. The custom sample demonstrates card scanner overrides in [StudioCardScanner.xcstrings](Samples/MicroblinkPlatformSampleCustomUI/MicroblinkPlatformSampleCustomUI/Resources/StudioCardScanner.xcstrings).
 
 ## Customizing the look
 
@@ -400,6 +418,10 @@ func makeConfiguration(token: String) -> EngineConfiguration {
     )
 }
 ```
+
+The default UI fills each whole scanner appearance from `MicroblinkPlatformTheme.shared` only when that configuration value is `nil`. An explicit appearance replaces that whole fallback; its individual fields are not merged with the Platform theme. Nil document/card properties preserve the vendor's current values, including previous overrides, while face appearance starts from fresh defaults per capture. The default UI requests light appearance; engine-only hosts choose their own color scheme.
+
+The custom sample's [StudioScannerAppearance](Samples/MicroblinkPlatformSampleCustomUI/MicroblinkPlatformSampleCustomUI/Chrome/StudioScannerAppearance.swift) demonstrates document, card, and face styling without importing the default UI module. Its launch screen passes the same appearance configuration for pasted tokens and transactions created through the sample form.
 
 <p align="center"><img src="Customizations/customization-1.jpg" alt="Customization 1" title="Customization 1"></p>
 <p align="center"><img src="Customizations/customization-2.jpg" alt="Customization 2" title="Customization 2"></p>
