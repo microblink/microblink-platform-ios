@@ -1,0 +1,125 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name BiometricsUX -package-name biometrics_sdk_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import AVFoundation
+import Biometrics
+import BiometricsCamera
+import BiometricsCore
+import BiometricsPing
+import CoreGraphics
+import DeveloperToolsSupport
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum CaptureOutcome : Swift::Sendable {
+  case completed(Biometrics::FaceCaptureResult)
+  case cancelled
+  case failed(BiometricsCore::CaptureError)
+}
+extension BiometricsCore::FaceImage {
+  public var croppedImage: UIKit::UIImage? {
+    get
+  }
+}
+public struct GuidedCaptureConfiguration : Swift::Sendable {
+  public var capture: Biometrics::CaptureOptions
+  public var appearance: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance
+  public var theme: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme
+  public var showsOnboarding: Swift::Bool
+  public var helpNudgeDelay: Swift::Duration
+  public var helpNudgeDuration: Swift::Duration
+  public var inactivityTimeout: Swift::Duration?
+  public var assistiveTimingMultiplier: Swift::Double
+  public var localization: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Localization
+  public init(capture: Biometrics::CaptureOptions = CaptureOptions(), appearance: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance = .system, theme: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme = Theme(), showsOnboarding: Swift::Bool = true, helpNudgeDelay: Swift::Duration = .seconds(10), helpNudgeDuration: Swift::Duration = .seconds(5), inactivityTimeout: Swift::Duration? = .seconds(10), assistiveTimingMultiplier: Swift::Double = 3.0, localization: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Localization = Localization())
+  public enum Appearance : Swift::Sendable {
+    case system
+    case light
+    case dark
+    public static func == (a: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance, b: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance) -> Swift::Bool
+    public func hash(into hasher: inout Swift::Hasher)
+    public var hashValue: Swift::Int {
+      get
+    }
+  }
+  public struct Localization : Swift::Sendable, Swift::Equatable {
+    public var bundle: Foundation::Bundle?
+    public var table: Swift::String?
+    public var language: Swift::String?
+    public init(bundle: Foundation::Bundle? = nil, table: Swift::String? = nil, language: Swift::String? = nil)
+    public static func == (a: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Localization, b: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Localization) -> Swift::Bool
+  }
+}
+extension BiometricsUX::GuidedCaptureConfiguration {
+  public struct Theme : Swift::Sendable {
+    public var instruction: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::FontStyle
+    public var successIcon: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::IconStyle
+    public var helpButton: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::IconStyle
+    public var helpTooltip: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+    public var helpTooltipBackground: SwiftUICore::Color
+    public var onboarding: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::DialogStyle
+    public var helpSheet: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::HelpSheetStyle
+    public init()
+    public struct TextStyle : Swift::Sendable {
+      public var font: SwiftUICore::Font
+      public var color: SwiftUICore::Color
+      public var lineSpacing: CoreFoundation::CGFloat
+      public init(font: SwiftUICore::Font, color: SwiftUICore::Color, lineSpacing: CoreFoundation::CGFloat = 0)
+    }
+    public struct FontStyle : Swift::Sendable {
+      public var font: SwiftUICore::Font
+      public var lineSpacing: CoreFoundation::CGFloat
+      public init(font: SwiftUICore::Font, lineSpacing: CoreFoundation::CGFloat = 0)
+    }
+    public struct IconStyle : Swift::Sendable {
+      public var image: SwiftUICore::Image
+      public var color: SwiftUICore::Color
+      public var background: SwiftUICore::Color
+      public init(image: SwiftUICore::Image, color: SwiftUICore::Color, background: SwiftUICore::Color)
+    }
+    public struct DialogStyle : Swift::Sendable {
+      public var background: SwiftUICore::Color
+      public var title: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var message: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var button: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public init()
+    }
+    public struct HelpSheetStyle : Swift::Sendable {
+      public var background: SwiftUICore::Color
+      public var title: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var message: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var button: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var primaryButton: BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Theme.BiometricsUX::TextStyle
+      public var pageIndicator: SwiftUICore::Color
+      public init()
+    }
+  }
+}
+@_Concurrency::MainActor @preconcurrency public struct GuidedFaceCaptureView : SwiftUICore::View {
+  @_Concurrency::MainActor @preconcurrency public init(sdk: Biometrics::BiometricsSdk, configuration: BiometricsUX::GuidedCaptureConfiguration = GuidedCaptureConfiguration(), onFinish: @escaping (BiometricsUX::CaptureOutcome) -> Swift::Void)
+  @_Concurrency::MainActor @preconcurrency public var body: some SwiftUICore::View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s12BiometricsUX21GuidedFaceCaptureViewV4bodyQrvp", 0) __
+}
+@objc @_Concurrency::MainActor @preconcurrency final public class GuidedFaceCaptureViewController : UIKit::UIViewController {
+  @_Concurrency::MainActor @preconcurrency public init(sdk: Biometrics::BiometricsSdk, configuration: BiometricsUX::GuidedCaptureConfiguration = GuidedCaptureConfiguration(), onFinish: @escaping (BiometricsUX::CaptureOutcome) -> Swift::Void)
+  @available(*, unavailable)
+  @_Concurrency::MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation::NSCoder)
+  @_Concurrency::MainActor @preconcurrency @objc override final public var childForStatusBarStyle: UIKit::UIViewController? {
+    @objc get
+  }
+  @_Concurrency::MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @objc deinit
+}
+extension BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance : Swift::Equatable {}
+extension BiometricsUX::GuidedCaptureConfiguration.BiometricsUX::Appearance : Swift::Hashable {}
+extension BiometricsUX::GuidedFaceCaptureView : Swift::Sendable {}

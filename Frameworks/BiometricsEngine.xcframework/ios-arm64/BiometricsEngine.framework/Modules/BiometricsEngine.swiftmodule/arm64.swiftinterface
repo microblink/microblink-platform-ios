@@ -1,0 +1,283 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 effective-5.10 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -static -language-mode 5 -O -enable-experimental-feature AccessLevelOnImport -enable-bare-slash-regex -module-name BiometricsEngine
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=swift-6 -interface-compiler-version 6.4.2
+import CoreGraphics
+import CoreMedia
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public struct LicenseError : Swift::Error, Swift::Sendable, Swift::CustomStringConvertible {
+  public let message: Swift::String
+  public var description: Swift::String {
+    get
+  }
+}
+public enum LicenseStatus : Swift::UInt8, Swift::Sendable {
+  case invalid
+  case requiresServerPermission
+  case valid
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public enum ServerPermissionIssue : Swift::UInt8, Swift::Error, Swift::Sendable {
+  case remoteLock
+  case permissionExpired
+  case payloadCorrupted
+  case payloadSignatureVerificationFailed
+  case incorrectTokenState
+  case detectedSkewedClock
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public struct LicenseState : Swift::Sendable {
+  public let status: BiometricsEngine::LicenseStatus
+  public let isValid: Swift::Bool
+  public let hasPing: Swift::Bool
+  public let hasPingProxyRights: Swift::Bool
+  public let hasBaltazarProxyRights: Swift::Bool
+  public let isOnline: Swift::Bool
+  public let leaseExpiresAt: Foundation::Date?
+  public let licenseId: Swift::String
+  public let licensee: Swift::String
+  public let applicationIds: [Swift::String]
+  public let sdkName: Swift::String
+  public let sdkVersion: Swift::String
+  public let error: Swift::String?
+}
+public enum EngineLicense {
+  public static func unlock(licenseKey: Swift::String, licensee: Swift::String? = nil) throws
+  public static var state: BiometricsEngine::LicenseState {
+    get
+  }
+  public static func submitServerPermission(_ response: Swift::String) throws
+}
+public enum AddPingletResult : Swift::Sendable, Swift::Equatable {
+  case success
+  case stringNotJSON
+  case stringTooLarge
+  case pingDisabledByLicense
+  case unknownFailure
+  public static func == (a: BiometricsEngine::AddPingletResult, b: BiometricsEngine::AddPingletResult) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct FlushedEnvelope : Swift::Sendable {
+  public let payload: Swift::String
+  public let pingletCount: Swift::UInt32
+}
+public enum EnginePing {
+  public static func isEnabled() -> Swift::Bool
+  public static func traceId() -> Swift::String
+  public static func addPinglet(json: Swift::String, schemaName: Swift::String, schemaVersion: Swift::String, sessionNumber: Swift::UInt64) -> BiometricsEngine::AddPingletResult
+  public static func flush() -> BiometricsEngine::FlushedEnvelope?
+  public static func reportSdkInitialization(userId: Swift::String, osVersion: Swift::String, deviceModel: Swift::String)
+  public static func reportSdkTermination()
+}
+final public class FaceAnalysisSession : Swift::Sendable {
+  @BiometricsEngine::ProcessingActor public init(settings: BiometricsEngine::FaceAnalysisSettings = .init(), preventPinglets: Swift::Bool = false, userId: Swift::String = "", maximumInputImageWidth: Swift::UInt16 = 0, maximumInputImageHeight: Swift::UInt16 = 0, detectsFaces: Swift::Bool = true) throws
+  @BiometricsEngine::ProcessingActor final public func process(_ cgImage: CoreGraphics::CGImage, landmarks: BiometricsEngine::FaceLandmarks? = nil, orientation: BiometricsEngine::ScreenOrientation = .portrait, roi: CoreFoundation::CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)) -> BiometricsEngine::FrameResult
+  @BiometricsEngine::ProcessingActor final public func process(_ sampleBuffer: CoreMedia::CMSampleBuffer, landmarks: BiometricsEngine::FaceLandmarks? = nil, orientation: BiometricsEngine::ScreenOrientation = .portrait, roi: CoreFoundation::CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)) -> BiometricsEngine::FrameResult
+  @discardableResult
+  @BiometricsEngine::ProcessingActor final public func reset() -> Swift::Bool
+  @BiometricsEngine::ProcessingActor final public var lastResetError: BiometricsEngine::SessionError {
+    get
+  }
+  final public func cancelProcessing()
+  final public func resumeProcessing()
+  @BiometricsEngine::ProcessingActor final public var result: BiometricsEngine::FaceAnalysisResult {
+    get
+  }
+  @BiometricsEngine::ProcessingActor final public var isFaceOk: Swift::Bool {
+    get
+  }
+  @BiometricsEngine::ProcessingActor final public var sessionNumber: Swift::UInt64 {
+    get
+  }
+  @BiometricsEngine::ProcessingActor final public var sessionId: Swift::String {
+    get
+  }
+  @BiometricsEngine::ProcessingActor final public func terminate()
+  @objc deinit
+}
+public enum FrameStatus : Swift::UInt8, Swift::Sendable {
+  case `continue`
+  case done
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public enum FaceFeedback : Swift::UInt8, Swift::Sendable {
+  case ok
+  case undefined
+  case faceNotFound
+  case faceTooClose
+  case faceTooFar
+  case faceCloseToBorder
+  case faceAngledPitch
+  case faceAngledRoll
+  case faceAngledYaw
+  case tooDark
+  case tooBright
+  case blurry
+  case glare
+  case tooManyFaces
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public struct CapturedFrame : Swift::Sendable {
+  public let data: Foundation::Data
+  public let captureTimeMs: Swift::Int64
+  public let frameNumber: Swift::Int32
+  public let signature: Foundation::Data
+  public init(data: Foundation::Data, captureTimeMs: Swift::Int64, frameNumber: Swift::Int32, signature: Foundation::Data)
+}
+public struct SuccessResult : Swift::Sendable {
+  public let captureFrame: BiometricsEngine::CapturedFrame
+  public let livenessFrames: [BiometricsEngine::CapturedFrame]
+  public let livenessBatchSignature: Foundation::Data?
+  public let signatureVersion: Swift::String
+  public let captureSignals: BiometricsEngine::CaptureSignals?
+  public init(captureFrame: BiometricsEngine::CapturedFrame, livenessFrames: [BiometricsEngine::CapturedFrame], livenessBatchSignature: Foundation::Data?, signatureVersion: Swift::String, captureSignals: BiometricsEngine::CaptureSignals? = nil)
+}
+public struct CaptureSignals : Swift::Sendable {
+  public let data: Foundation::Data
+  public let signature: Foundation::Data
+  public let batchSignature: Foundation::Data
+  public init(data: Foundation::Data, signature: Foundation::Data, batchSignature: Foundation::Data)
+}
+public struct FrameResult : Swift::Sendable {
+  public let status: BiometricsEngine::FrameStatus
+  public let feedback: BiometricsEngine::FaceFeedback
+  public let boundingBox: BiometricsEngine::BoundingBox?
+  public let landmarks: BiometricsEngine::FaceLandmarks?
+  public let successResult: BiometricsEngine::SuccessResult?
+  public init(status: BiometricsEngine::FrameStatus = .continue, feedback: BiometricsEngine::FaceFeedback = .undefined, boundingBox: BiometricsEngine::BoundingBox? = nil, landmarks: BiometricsEngine::FaceLandmarks? = nil, successResult: BiometricsEngine::SuccessResult? = nil)
+}
+public struct FaceAnalysisResult : Swift::Sendable {
+  public let faceOk: Swift::Bool
+  public let lastFrameResult: BiometricsEngine::FrameResult?
+  public init(faceOk: Swift::Bool = false, lastFrameResult: BiometricsEngine::FrameResult? = nil)
+}
+public struct Point2f : Swift::Sendable {
+  public var x: Swift::Float
+  public var y: Swift::Float
+  public init(x: Swift::Float = 0, y: Swift::Float = 0)
+}
+public struct BoundingBox : Swift::Sendable {
+  public var topLeft: BiometricsEngine::Point2f
+  public var bottomRight: BiometricsEngine::Point2f
+  public init(topLeft: BiometricsEngine::Point2f = .init(), bottomRight: BiometricsEngine::Point2f = .init())
+}
+public struct FaceLandmarks : Swift::Sendable {
+  public var eyeLeft: BiometricsEngine::Point2f
+  public var eyeRight: BiometricsEngine::Point2f
+  public var earLeft: BiometricsEngine::Point2f
+  public var earRight: BiometricsEngine::Point2f
+  public var noseTip: BiometricsEngine::Point2f
+  public var mouthCenter: BiometricsEngine::Point2f
+  public init(eyeLeft: BiometricsEngine::Point2f = .init(), eyeRight: BiometricsEngine::Point2f = .init(), earLeft: BiometricsEngine::Point2f = .init(), earRight: BiometricsEngine::Point2f = .init(), noseTip: BiometricsEngine::Point2f = .init(), mouthCenter: BiometricsEngine::Point2f = .init())
+}
+public struct FacePositionThresholds : Swift::Sendable {
+  public var feedbackDelayMillis: Swift::UInt32
+  public var minEyeDistance: Swift::Float
+  public var maxEyeDistance: Swift::Float
+  public var closeToBorderMargin: Swift::Float
+  public var maxPitchUpAngle: Swift::Float
+  public var maxPitchDownAngle: Swift::Float
+  public var maxRollAngle: Swift::Float
+  public var maxYawAngle: Swift::Float
+  public init()
+}
+public struct LightingThresholds : Swift::Sendable {
+  public var tooDarkThreshold: Swift::Float
+  public var tooBrightThreshold: Swift::Float
+  public init()
+}
+public struct FaceAnalysisSettings : Swift::Sendable {
+  public var facePositionThresholds: BiometricsEngine::FacePositionThresholds
+  public var lightingThresholds: BiometricsEngine::LightingThresholds
+  public var livenessFramesCount: Swift::UInt32
+  public init(facePositionThresholds: BiometricsEngine::FacePositionThresholds = .init(), lightingThresholds: BiometricsEngine::LightingThresholds = .init(), livenessFramesCount: Swift::UInt32? = nil)
+}
+public enum SessionLoadError : Swift::UInt8, Swift::Error, Swift::Sendable {
+  case invalidSettings
+  case missingResources
+  case invalidLicense
+  case unknown
+  case invalidResources
+  case memoryReserveFailed
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public enum SessionError : Swift::UInt8, Swift::Error, Swift::Sendable {
+  case notInitialized
+  case cancelled
+  case `internal`
+  case unknown
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
+}
+public enum ScreenOrientation : Swift::Int32, Swift::Sendable {
+  case portrait
+  case landscapeRight
+  case upsidePortrait
+  case landscapeLeft
+  public init?(rawValue: Swift::Int32)
+  public typealias RawValue = Swift::Int32
+  public var rawValue: Swift::Int32 {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @globalActor public actor ProcessingActor {
+  public static let shared: BiometricsEngine::ProcessingActor
+  public typealias ActorType = BiometricsEngine::ProcessingActor
+  @objc deinit
+  @_semantics("defaultActor") nonisolated final public var unownedExecutor: _Concurrency::UnownedSerialExecutor {
+    get
+  }
+}
+extension BiometricsEngine::LicenseStatus : Swift::Equatable {}
+extension BiometricsEngine::LicenseStatus : Swift::Hashable {}
+extension BiometricsEngine::LicenseStatus : Swift::RawRepresentable {}
+extension BiometricsEngine::ServerPermissionIssue : Swift::Equatable {}
+extension BiometricsEngine::ServerPermissionIssue : Swift::Hashable {}
+extension BiometricsEngine::ServerPermissionIssue : Swift::RawRepresentable {}
+extension BiometricsEngine::AddPingletResult : Swift::Hashable {}
+extension BiometricsEngine::FrameStatus : Swift::Equatable {}
+extension BiometricsEngine::FrameStatus : Swift::Hashable {}
+extension BiometricsEngine::FrameStatus : Swift::RawRepresentable {}
+extension BiometricsEngine::FaceFeedback : Swift::Equatable {}
+extension BiometricsEngine::FaceFeedback : Swift::Hashable {}
+extension BiometricsEngine::FaceFeedback : Swift::RawRepresentable {}
+extension BiometricsEngine::SessionLoadError : Swift::Equatable {}
+extension BiometricsEngine::SessionLoadError : Swift::Hashable {}
+extension BiometricsEngine::SessionLoadError : Swift::RawRepresentable {}
+extension BiometricsEngine::SessionError : Swift::Equatable {}
+extension BiometricsEngine::SessionError : Swift::Hashable {}
+extension BiometricsEngine::SessionError : Swift::RawRepresentable {}
+extension BiometricsEngine::ScreenOrientation : Swift::Equatable {}
+extension BiometricsEngine::ScreenOrientation : Swift::Hashable {}
+extension BiometricsEngine::ScreenOrientation : Swift::RawRepresentable {}
+extension BiometricsEngine::ProcessingActor : _Concurrency::GlobalActor {}

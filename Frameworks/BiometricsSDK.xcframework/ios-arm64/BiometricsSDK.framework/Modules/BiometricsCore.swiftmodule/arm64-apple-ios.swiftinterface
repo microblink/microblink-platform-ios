@@ -1,0 +1,159 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name BiometricsCore -package-name biometrics_sdk_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import CoreGraphics
+import CoreImage
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os
+public enum BiometricsErrorCode : Swift::String, Swift::Sendable, Swift::Equatable, Swift::Codable {
+  case captureTimeout
+  case captureFailed
+  case invalidLicenseKey
+  case cameraAccessDenied
+  case notConfigured
+  case invalidEnvironment
+  case networkError
+  case serverError
+  case invalidFormat
+  case unknownError
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public enum BiometricsErrorType : Swift::String, Swift::Sendable, Swift::Equatable, Swift::Codable {
+  case sessionError
+  case licenseError
+  case permissionError
+  case configurationError
+  case networkError
+  case serverError
+  case validationError
+  case unknownError
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
+    get
+  }
+}
+public struct BiometricsError : Swift::Error, Swift::Sendable, Swift::Equatable {
+  public let code: BiometricsCore::BiometricsErrorCode
+  public let type: BiometricsCore::BiometricsErrorType
+  public let message: Swift::String
+  public let isRetryable: Swift::Bool
+  public init(code: BiometricsCore::BiometricsErrorCode, type: BiometricsCore::BiometricsErrorType, message: Swift::String, isRetryable: Swift::Bool)
+  public static func == (a: BiometricsCore::BiometricsError, b: BiometricsCore::BiometricsError) -> Swift::Bool
+}
+extension BiometricsCore::BiometricsError : Foundation::LocalizedError {
+  public var errorDescription: Swift::String? {
+    get
+  }
+  public var failureReason: Swift::String? {
+    get
+  }
+  public var recoverySuggestion: Swift::String? {
+    get
+  }
+}
+extension BiometricsCore::BiometricsError : Swift::CustomStringConvertible {
+  public var description: Swift::String {
+    get
+  }
+}
+public enum BiometricsLogLevel : Swift::Int, Swift::Sendable, Swift::Comparable, Swift::CaseIterable {
+  case debug
+  case info
+  case warning
+  case error
+  case off
+  public static func < (lhs: BiometricsCore::BiometricsLogLevel, rhs: BiometricsCore::BiometricsLogLevel) -> Swift::Bool
+  public init?(rawValue: Swift::Int)
+  public typealias AllCases = [BiometricsCore::BiometricsLogLevel]
+  public typealias RawValue = Swift::Int
+  nonisolated public static var allCases: [BiometricsCore::BiometricsLogLevel] {
+    get
+  }
+  public var rawValue: Swift::Int {
+    get
+  }
+}
+public enum CaptureError : Swift::Error, Swift::Sendable, Swift::Equatable {
+  case timeout
+  case cameraPermissionDenied
+  case cameraUnavailable(BiometricsCore::BiometricsError)
+  case licenseInvalid(BiometricsCore::BiometricsError)
+  case engineFailure(BiometricsCore::BiometricsError)
+  public var isRetryable: Swift::Bool {
+    get
+  }
+  public var underlyingError: BiometricsCore::BiometricsError? {
+    get
+  }
+  public static func == (a: BiometricsCore::CaptureError, b: BiometricsCore::CaptureError) -> Swift::Bool
+}
+extension BiometricsCore::CaptureError : Foundation::LocalizedError {
+  public var errorDescription: Swift::String? {
+    get
+  }
+  public var recoverySuggestion: Swift::String? {
+    get
+  }
+}
+public struct CaptureSignals : Swift::Codable, Swift::Sendable, Swift::Equatable {
+  public let data: Foundation::Data
+  public let signature: Foundation::Data
+  public let batchSignature: Foundation::Data
+  public init(data: Foundation::Data, signature: Foundation::Data, batchSignature: Foundation::Data)
+  public static func == (a: BiometricsCore::CaptureSignals, b: BiometricsCore::CaptureSignals) -> Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct FacePoint : Swift::Sendable, Swift::Equatable, Swift::Codable {
+  public let x: CoreFoundation::CGFloat
+  public let y: CoreFoundation::CGFloat
+  public init(x: CoreFoundation::CGFloat, y: CoreFoundation::CGFloat)
+  public static func == (a: BiometricsCore::FacePoint, b: BiometricsCore::FacePoint) -> Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct FaceLandmarks : Swift::Sendable, Swift::Equatable {
+  public let leftEye: BiometricsCore::FacePoint?
+  public let rightEye: BiometricsCore::FacePoint?
+  public let noseTip: BiometricsCore::FacePoint?
+  public let mouth: BiometricsCore::FacePoint?
+  public let leftEar: BiometricsCore::FacePoint?
+  public let rightEar: BiometricsCore::FacePoint?
+  public init(leftEye: BiometricsCore::FacePoint? = nil, rightEye: BiometricsCore::FacePoint? = nil, noseTip: BiometricsCore::FacePoint? = nil, mouth: BiometricsCore::FacePoint? = nil, leftEar: BiometricsCore::FacePoint? = nil, rightEar: BiometricsCore::FacePoint? = nil)
+  public static func == (a: BiometricsCore::FaceLandmarks, b: BiometricsCore::FaceLandmarks) -> Swift::Bool
+}
+public struct FaceImage : Swift::Sendable {
+  public let imageData: Foundation::Data
+  public let bounds: CoreFoundation::CGRect?
+  public let landmarks: BiometricsCore::FaceLandmarks?
+  public init(imageData: Foundation::Data, bounds: CoreFoundation::CGRect? = nil, landmarks: BiometricsCore::FaceLandmarks? = nil)
+}
+public struct SignedFrame : Swift::Codable, Swift::Sendable, Swift::Equatable {
+  public let data: Foundation::Data
+  public let captureTimeMs: Swift::Int64
+  public let frameNumber: Swift::Int
+  public let signature: Foundation::Data
+  public init(data: Foundation::Data, captureTimeMs: Swift::Int64, frameNumber: Swift::Int, signature: Foundation::Data)
+  public static func == (a: BiometricsCore::SignedFrame, b: BiometricsCore::SignedFrame) -> Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+extension BiometricsCore::BiometricsErrorCode : Swift::Hashable {}
+extension BiometricsCore::BiometricsErrorCode : Swift::RawRepresentable {}
+extension BiometricsCore::BiometricsErrorType : Swift::Hashable {}
+extension BiometricsCore::BiometricsErrorType : Swift::RawRepresentable {}
+extension BiometricsCore::BiometricsLogLevel : Swift::Hashable {}
+extension BiometricsCore::BiometricsLogLevel : Swift::RawRepresentable {}

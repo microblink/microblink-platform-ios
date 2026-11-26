@@ -1,0 +1,512 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios17.0 -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name MicroblinkPlatformEngine
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import AVFoundation
+import Combine
+import Foundation
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_Concurrency::MainActor final public class ScannerPresentation : Combine::ObservableObject {
+  @_Concurrency::MainActor public init()
+  public typealias ObjectWillChangePublisher = Combine::ObservableObjectPublisher
+  @objc deinit
+}
+extension SwiftUICore::View {
+  @_Concurrency::MainActor public func scannerPresentation(_ presentation: MicroblinkPlatformEngine::ScannerPresentation) -> some SwiftUICore::View
+  
+}
+public struct CardScanAppearance : Swift::Equatable, Swift::Sendable {
+  public var alertTitleColor: SwiftUICore::Color?
+  public var alertTitleFont: SwiftUICore::Font?
+  public var alertDescriptionColor: SwiftUICore::Color?
+  public var alertDescriptionFont: SwiftUICore::Font?
+  public var alertButtonColor: SwiftUICore::Color?
+  public var alertButtonFont: SwiftUICore::Font?
+  public var alertBackgroundColor: SwiftUICore::Color?
+  public var onboardingSheetTitleColor: SwiftUICore::Color?
+  public var onboardingSheetTitleFont: SwiftUICore::Font?
+  public var onboardingSheetDescriptionColor: SwiftUICore::Color?
+  public var onboardingSheetDescriptionFont: SwiftUICore::Font?
+  public var onboardingSheetButtonColor: SwiftUICore::Color?
+  public var onboardingSheetButtonFont: SwiftUICore::Font?
+  public var onboardingSheetPageIndicatorColor: SwiftUICore::Color?
+  public var onboardingSheetBackgroundColor: SwiftUICore::Color?
+  public var reticleTooltipFont: SwiftUICore::Font?
+  public var helpButtonForegroundColor: SwiftUICore::Color?
+  public var helpButtonBackgroundColor: SwiftUICore::Color?
+  public var helpButtonTooltipForegroundColor: SwiftUICore::Color?
+  public var helpButtonTooltipBackgroundColor: SwiftUICore::Color?
+  public var toastBackgroundColor: SwiftUICore::Color?
+  public var localizationBundle: Foundation::Bundle?
+  public var localizationTableName: Swift::String?
+  public var language: Swift::String?
+  public init()
+  public static func == (a: MicroblinkPlatformEngine::CardScanAppearance, b: MicroblinkPlatformEngine::CardScanAppearance) -> Swift::Bool
+}
+public struct DocumentScanAppearance : Swift::Equatable, Swift::Sendable {
+  public var documentScanAlertTitleColor: SwiftUICore::Color?
+  public var documentScanAlertTitleFont: SwiftUICore::Font?
+  public var documentScanAlertDescriptionColor: SwiftUICore::Color?
+  public var documentScanAlertDescriptionFont: SwiftUICore::Font?
+  public var documentScanAlertButtonColor: SwiftUICore::Color?
+  public var documentScanAlertButtonFont: SwiftUICore::Font?
+  public var documentScanAlertBackgroundColor: SwiftUICore::Color?
+  public var documentScanOnboardingSheetTitleColor: SwiftUICore::Color?
+  public var documentScanOnboardingSheetTitleFont: SwiftUICore::Font?
+  public var documentScanOnboardingSheetDescriptionColor: SwiftUICore::Color?
+  public var documentScanOnboardingSheetDescriptionFont: SwiftUICore::Font?
+  public var documentScanOnboardingSheetButtonColor: SwiftUICore::Color?
+  public var documentScanOnboardingSheetButtonFont: SwiftUICore::Font?
+  public var documentScanOnboardingSheetPageIndicatorColor: SwiftUICore::Color?
+  public var documentScanOnboardingSheetBackgroundColor: SwiftUICore::Color?
+  public var documentScanReticleTooltipFont: SwiftUICore::Font?
+  public var documentScanHelpButtonForegroundColor: SwiftUICore::Color?
+  public var documentScanHelpButtonBackgroundColor: SwiftUICore::Color?
+  public init()
+  public static func == (a: MicroblinkPlatformEngine::DocumentScanAppearance, b: MicroblinkPlatformEngine::DocumentScanAppearance) -> Swift::Bool
+}
+public struct NetworkRetryPolicy : Swift::Equatable, Swift::Sendable {
+  public var maxAttempts: Swift::Int
+  public var retryDelay: Foundation::TimeInterval
+  public init(maxAttempts: Swift::Int = 5, retryDelay: Foundation::TimeInterval = 0.5)
+  public static func == (a: MicroblinkPlatformEngine::NetworkRetryPolicy, b: MicroblinkPlatformEngine::NetworkRetryPolicy) -> Swift::Bool
+}
+public struct ServiceSettings : Swift::Sendable {
+  public var sdkConfiguration: Swift::String
+  public var retryPolicy: MicroblinkPlatformEngine::NetworkRetryPolicy
+  public init(sdkConfiguration: Swift::String, retryPolicy: MicroblinkPlatformEngine::NetworkRetryPolicy = NetworkRetryPolicy())
+}
+public struct ScannerAppearance : Swift::Equatable, Swift::Sendable {
+  public var localizationTableName: Swift::String?
+  public var documentScannerAppearance: MicroblinkPlatformEngine::DocumentScanAppearance?
+  public var cardScannerAppearance: MicroblinkPlatformEngine::CardScanAppearance?
+  public var faceCaptureAppearance: MicroblinkPlatformEngine::FaceCaptureAppearance?
+  public init(localizationTableName: Swift::String? = nil, documentScannerAppearance: MicroblinkPlatformEngine::DocumentScanAppearance? = nil, cardScannerAppearance: MicroblinkPlatformEngine::CardScanAppearance? = nil, faceCaptureAppearance: MicroblinkPlatformEngine::FaceCaptureAppearance? = nil)
+  public static func == (a: MicroblinkPlatformEngine::ScannerAppearance, b: MicroblinkPlatformEngine::ScannerAppearance) -> Swift::Bool
+}
+public struct EngineConfiguration : Swift::Sendable {
+  public var service: MicroblinkPlatformEngine::ServiceSettings
+  public var scannerAppearance: MicroblinkPlatformEngine::ScannerAppearance
+  public init(service: MicroblinkPlatformEngine::ServiceSettings, scannerAppearance: MicroblinkPlatformEngine::ScannerAppearance = ScannerAppearance())
+}
+public enum SessionStartError : Swift::Error, Swift::Equatable {
+  case invalidSDKConfiguration
+  case unsupportedWorkflowVersion(workflowVersion: Swift::String, sdkVersion: Swift::String)
+  public static func == (a: MicroblinkPlatformEngine::SessionStartError, b: MicroblinkPlatformEngine::SessionStartError) -> Swift::Bool
+}
+public enum StepValidationReason : Swift::Equatable, Swift::Sendable {
+  case retakeSelfie
+  case faceOccluded
+  case verifyDocumentInvalidInput
+  case verifyDocumentUnsupportedInput
+  case uploadNonIDDocumentInvalidInput
+  case uploadIDDocumentUploadAgain
+  case uploadIDUnsupportedDocument
+  case stepCanceled
+  case generic
+  public static func == (a: MicroblinkPlatformEngine::StepValidationReason, b: MicroblinkPlatformEngine::StepValidationReason) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum RetryAction : Swift::Equatable, Swift::Sendable {
+  case callNextWithoutInput
+  case resubmitHostInput(MicroblinkPlatformEngine::HostInputKind)
+  public static func == (a: MicroblinkPlatformEngine::RetryAction, b: MicroblinkPlatformEngine::RetryAction) -> Swift::Bool
+}
+public enum HostInputKind : Swift::Equatable, Swift::Sendable {
+  case form
+  case uploadIDDocument
+  case uploadNonIDDocument
+  public static func == (a: MicroblinkPlatformEngine::HostInputKind, b: MicroblinkPlatformEngine::HostInputKind) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum ExpectedInput : Swift::Equatable, Swift::Sendable {
+  case none
+  case hostInput(MicroblinkPlatformEngine::HostInputKind)
+  public static func == (a: MicroblinkPlatformEngine::ExpectedInput, b: MicroblinkPlatformEngine::ExpectedInput) -> Swift::Bool
+}
+public struct FormFieldError : Swift::Equatable, Swift::Sendable {
+  public var fieldName: Swift::String
+  public var reason: MicroblinkPlatformEngine::FormFieldErrorReason
+  public init(fieldName: Swift::String, reason: MicroblinkPlatformEngine::FormFieldErrorReason)
+  public static func == (a: MicroblinkPlatformEngine::FormFieldError, b: MicroblinkPlatformEngine::FormFieldError) -> Swift::Bool
+}
+public enum FormFieldErrorReason : Swift::Equatable, Swift::Sendable {
+  case required
+  case wrongType
+  case invalidFormat
+  case outOfRange
+  public static func == (a: MicroblinkPlatformEngine::FormFieldErrorReason, b: MicroblinkPlatformEngine::FormFieldErrorReason) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum UploadInputErrorReason : Swift::Equatable, Swift::Sendable {
+  case empty
+  case tooLarge
+  case unreadable
+  case unsupportedType
+  public static func == (a: MicroblinkPlatformEngine::UploadInputErrorReason, b: MicroblinkPlatformEngine::UploadInputErrorReason) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum EngineError : Swift::Equatable, Swift::Sendable {
+  case noNetwork
+  case timeout
+  case verificationUnavailable
+  case stepValidation(reason: MicroblinkPlatformEngine::StepValidationReason, step: MicroblinkPlatformEngine::Step)
+  case retryLimitExceeded
+  case invalidNextInput(expected: MicroblinkPlatformEngine::ExpectedInput, actual: Swift::String)
+  case invalidFormInput([MicroblinkPlatformEngine::FormFieldError])
+  case invalidUploadInput(MicroblinkPlatformEngine::UploadInputErrorReason)
+  case `internal`(message: Swift::String)
+  public static func == (a: MicroblinkPlatformEngine::EngineError, b: MicroblinkPlatformEngine::EngineError) -> Swift::Bool
+}
+public enum EngineStatus : Swift::Equatable, Swift::Sendable {
+  case idle
+  case communicatingWithBackend
+  case uploadingFile(percentComplete: Swift::Int)
+  case runningEngineStep(MicroblinkPlatformEngine::EngineStepProgress)
+  case waitingForHost
+  case cancelling
+  case terminal(MicroblinkPlatformEngine::SessionOutcome)
+  public static func == (a: MicroblinkPlatformEngine::EngineStatus, b: MicroblinkPlatformEngine::EngineStatus) -> Swift::Bool
+}
+public struct EngineStepProgress : Swift::Equatable, Swift::Sendable {
+  public var type: MicroblinkPlatformEngine::EngineStepType
+  public var status: MicroblinkPlatformEngine::EngineStepStatus
+  public init(type: MicroblinkPlatformEngine::EngineStepType, status: MicroblinkPlatformEngine::EngineStepStatus)
+  public static func == (a: MicroblinkPlatformEngine::EngineStepProgress, b: MicroblinkPlatformEngine::EngineStepProgress) -> Swift::Bool
+}
+public enum EngineStepType : Swift::Equatable, Swift::Sendable {
+  case documentScan
+  case verifyDocument
+  case faceCapture
+  case cardScan
+  public static func == (a: MicroblinkPlatformEngine::EngineStepType, b: MicroblinkPlatformEngine::EngineStepType) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum EngineStepStatus : Swift::Equatable, Swift::Sendable {
+  case preparing
+  case running
+  case submitting
+  public static func == (a: MicroblinkPlatformEngine::EngineStepStatus, b: MicroblinkPlatformEngine::EngineStepStatus) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct FaceCaptureAppearance : Swift::Equatable, Swift::Sendable {
+  public var instruction: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::FontStyle
+  public var successIcon: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::IconStyle
+  public var helpButton: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::IconStyle
+  public var helpTooltip: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+  public var helpTooltipBackground: SwiftUICore::Color
+  public var onboarding: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::DialogStyle
+  public var helpSheet: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::HelpSheetStyle
+  public init()
+  public struct TextStyle : Swift::Equatable, Swift::Sendable {
+    public var font: SwiftUICore::Font
+    public var color: SwiftUICore::Color
+    public var lineSpacing: CoreFoundation::CGFloat
+    public init(font: SwiftUICore::Font, color: SwiftUICore::Color, lineSpacing: CoreFoundation::CGFloat = 0)
+    public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle, b: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle) -> Swift::Bool
+  }
+  public struct FontStyle : Swift::Equatable, Swift::Sendable {
+    public var font: SwiftUICore::Font
+    public var lineSpacing: CoreFoundation::CGFloat
+    public init(font: SwiftUICore::Font, lineSpacing: CoreFoundation::CGFloat = 0)
+    public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::FontStyle, b: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::FontStyle) -> Swift::Bool
+  }
+  public struct IconStyle : Swift::Equatable, Swift::Sendable {
+    public var image: SwiftUICore::Image
+    public var color: SwiftUICore::Color
+    public var background: SwiftUICore::Color
+    public init(image: SwiftUICore::Image, color: SwiftUICore::Color, background: SwiftUICore::Color)
+    public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::IconStyle, b: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::IconStyle) -> Swift::Bool
+  }
+  public struct DialogStyle : Swift::Equatable, Swift::Sendable {
+    public var background: SwiftUICore::Color
+    public var title: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var message: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var button: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public init()
+    public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::DialogStyle, b: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::DialogStyle) -> Swift::Bool
+  }
+  public struct HelpSheetStyle : Swift::Equatable, Swift::Sendable {
+    public var background: SwiftUICore::Color
+    public var title: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var message: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var button: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var primaryButton: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::TextStyle
+    public var pageIndicator: SwiftUICore::Color
+    public init()
+    public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::HelpSheetStyle, b: MicroblinkPlatformEngine::FaceCaptureAppearance.MicroblinkPlatformEngine::HelpSheetStyle) -> Swift::Bool
+  }
+  public static func == (a: MicroblinkPlatformEngine::FaceCaptureAppearance, b: MicroblinkPlatformEngine::FaceCaptureAppearance) -> Swift::Bool
+}
+public enum TextSubtype : Swift::Equatable, Swift::Sendable {
+  case any
+  case email
+  case phone
+  case ssn
+  public static func == (a: MicroblinkPlatformEngine::TextSubtype, b: MicroblinkPlatformEngine::TextSubtype) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum NumberSubtype : Swift::Equatable, Swift::Sendable {
+  case integer
+  case decimal
+  public static func == (a: MicroblinkPlatformEngine::NumberSubtype, b: MicroblinkPlatformEngine::NumberSubtype) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum DateTimeSubtype : Swift::Equatable, Swift::Sendable {
+  case date
+  case time
+  case dateTime
+  public static func == (a: MicroblinkPlatformEngine::DateTimeSubtype, b: MicroblinkPlatformEngine::DateTimeSubtype) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum FileSubtype : Swift::Equatable, Swift::Sendable {
+  case image
+  case pdf
+  public static func == (a: MicroblinkPlatformEngine::FileSubtype, b: MicroblinkPlatformEngine::FileSubtype) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct FormField : Swift::Equatable, Swift::Sendable {
+  public var name: Swift::String
+  public var displayName: Swift::String?
+  public var description: Swift::String?
+  public var isRequired: Swift::Bool
+  public var defaultValue: Swift::String?
+  public var kind: MicroblinkPlatformEngine::FormField.MicroblinkPlatformEngine::Kind
+  public init(name: Swift::String, displayName: Swift::String? = nil, description: Swift::String? = nil, isRequired: Swift::Bool = false, defaultValue: Swift::String? = nil, kind: MicroblinkPlatformEngine::FormField.MicroblinkPlatformEngine::Kind)
+  public enum Kind : Swift::Equatable, Swift::Sendable {
+    case text(MicroblinkPlatformEngine::TextSubtype)
+    case number(MicroblinkPlatformEngine::NumberSubtype)
+    case bool
+    case dateTime(MicroblinkPlatformEngine::DateTimeSubtype)
+    case file(MicroblinkPlatformEngine::FileSubtype)
+    public static func == (a: MicroblinkPlatformEngine::FormField.MicroblinkPlatformEngine::Kind, b: MicroblinkPlatformEngine::FormField.MicroblinkPlatformEngine::Kind) -> Swift::Bool
+  }
+  public static func == (a: MicroblinkPlatformEngine::FormField, b: MicroblinkPlatformEngine::FormField) -> Swift::Bool
+}
+public enum UploadSource : Swift::Equatable, Swift::Sendable {
+  case data(Foundation::Data)
+  case file(Foundation::URL)
+  public static func == (a: MicroblinkPlatformEngine::UploadSource, b: MicroblinkPlatformEngine::UploadSource) -> Swift::Bool
+}
+public struct UploadFile : Swift::Equatable, Swift::Sendable {
+  public var contentType: Swift::String
+  public var fileName: Swift::String
+  public var source: MicroblinkPlatformEngine::UploadSource
+  public init(contentType: Swift::String, fileName: Swift::String, source: MicroblinkPlatformEngine::UploadSource)
+  public static func == (a: MicroblinkPlatformEngine::UploadFile, b: MicroblinkPlatformEngine::UploadFile) -> Swift::Bool
+}
+public enum FormFieldValue : Swift::Equatable, Swift::Sendable {
+  case text(fieldName: Swift::String, value: Swift::String?)
+  case integer(fieldName: Swift::String, value: Swift::Int64?)
+  case decimal(fieldName: Swift::String, value: Foundation::Decimal?)
+  case bool(fieldName: Swift::String, value: Swift::Bool?)
+  case date(fieldName: Swift::String, value: Swift::String?)
+  case time(fieldName: Swift::String, value: Swift::String?)
+  case dateTime(fieldName: Swift::String, value: Swift::String?)
+  case file(fieldName: Swift::String, value: MicroblinkPlatformEngine::UploadFile?)
+  public var fieldName: Swift::String {
+    get
+  }
+  public static func == (a: MicroblinkPlatformEngine::FormFieldValue, b: MicroblinkPlatformEngine::FormFieldValue) -> Swift::Bool
+}
+public struct SessionStart {
+  public let session: any MicroblinkPlatformEngine::Session
+  public let first: MicroblinkPlatformEngine::StepResult
+  public init(session: any MicroblinkPlatformEngine::Session, first: MicroblinkPlatformEngine::StepResult)
+}
+@_Concurrency::MainActor public protocol Session : AnyObject {
+  @_Concurrency::MainActor var status: MicroblinkPlatformEngine::EngineStatus { get }
+  @_Concurrency::MainActor func statusUpdates() -> _Concurrency::AsyncStream<MicroblinkPlatformEngine::EngineStatus>
+  @_Concurrency::MainActor var scannerPresentation: MicroblinkPlatformEngine::ScannerPresentation { get }
+  @_Concurrency::MainActor func next(_ input: MicroblinkPlatformEngine::StepInput) async -> MicroblinkPlatformEngine::StepResult
+  @_Concurrency::MainActor func cancel(_ reason: MicroblinkPlatformEngine::CancelReason) async -> MicroblinkPlatformEngine::CanceledOutcome
+}
+public enum VerificationState : Swift::Equatable, Swift::Sendable {
+  case accept
+  case reject
+  case review
+  public static func == (a: MicroblinkPlatformEngine::VerificationState, b: MicroblinkPlatformEngine::VerificationState) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum CancelReason : Swift::Equatable, Swift::Sendable {
+  case userCanceled
+  case unsupportedWorkflowVersion
+  public static func == (a: MicroblinkPlatformEngine::CancelReason, b: MicroblinkPlatformEngine::CancelReason) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct CanceledOutcome : Swift::Equatable, Swift::Sendable {
+  public let transactionId: Swift::String
+  public let reason: MicroblinkPlatformEngine::CancelReason
+  public init(transactionId: Swift::String, reason: MicroblinkPlatformEngine::CancelReason)
+  public static func == (a: MicroblinkPlatformEngine::CanceledOutcome, b: MicroblinkPlatformEngine::CanceledOutcome) -> Swift::Bool
+}
+public enum SessionOutcome : Swift::Equatable, Swift::Sendable {
+  case verification(transactionId: Swift::String, state: MicroblinkPlatformEngine::VerificationState)
+  case canceled(MicroblinkPlatformEngine::CanceledOutcome)
+  public static func == (a: MicroblinkPlatformEngine::SessionOutcome, b: MicroblinkPlatformEngine::SessionOutcome) -> Swift::Bool
+}
+public struct AllowedDocument : Swift::Equatable, Swift::Sendable {
+  public var displayName: Swift::String?
+  public var description: Swift::String?
+  public var allowedFileTypes: [Swift::String]
+  public var documentType: Swift::String?
+  public init(displayName: Swift::String?, description: Swift::String?, allowedFileTypes: [Swift::String], documentType: Swift::String?)
+  public static func == (a: MicroblinkPlatformEngine::AllowedDocument, b: MicroblinkPlatformEngine::AllowedDocument) -> Swift::Bool
+}
+public enum InputRequest : Swift::Equatable, Swift::Sendable {
+  case form(fields: [MicroblinkPlatformEngine::FormField], isKioskModeEnabled: Swift::Bool)
+  case uploadIdDocument(displayName: Swift::String?, description: Swift::String?, isOnlyFrontSide: Swift::Bool, recommendedMaxFileSizeKb: Swift::Int?, isKioskModeEnabled: Swift::Bool)
+  case uploadNonIdDocument(allowedDocuments: [MicroblinkPlatformEngine::AllowedDocument], recommendedMaxFileSizeKb: Swift::Int?, isKioskModeEnabled: Swift::Bool)
+  public static func == (a: MicroblinkPlatformEngine::InputRequest, b: MicroblinkPlatformEngine::InputRequest) -> Swift::Bool
+}
+public enum StepAction : Swift::Equatable, Swift::Sendable {
+  case engineStep(step: MicroblinkPlatformEngine::Step, type: MicroblinkPlatformEngine::EngineStepType)
+  case inputStep(step: MicroblinkPlatformEngine::Step, request: MicroblinkPlatformEngine::InputRequest)
+  public static func == (a: MicroblinkPlatformEngine::StepAction, b: MicroblinkPlatformEngine::StepAction) -> Swift::Bool
+}
+public struct CardScanResult : Swift::Equatable, Swift::Sendable {
+  public var isCardNumberValid: Swift::Bool
+  public var cardNumber: Swift::String?
+  public var owner: Swift::String?
+  public var expiryDate: Swift::String?
+  public var cvv: Swift::String?
+  public init(isCardNumberValid: Swift::Bool, cardNumber: Swift::String?, owner: Swift::String?, expiryDate: Swift::String?, cvv: Swift::String? = nil)
+  public static func == (a: MicroblinkPlatformEngine::CardScanResult, b: MicroblinkPlatformEngine::CardScanResult) -> Swift::Bool
+}
+extension MicroblinkPlatformEngine::CardScanResult : Swift::CustomStringConvertible, Swift::CustomDebugStringConvertible {
+  public var description: Swift::String {
+    get
+  }
+  public var debugDescription: Swift::String {
+    get
+  }
+}
+public enum StepOutput : Swift::Equatable, Swift::Sendable {
+  case cardScan(step: MicroblinkPlatformEngine::Step, result: MicroblinkPlatformEngine::CardScanResult)
+  public static func == (a: MicroblinkPlatformEngine::StepOutput, b: MicroblinkPlatformEngine::StepOutput) -> Swift::Bool
+}
+public enum StepBlocker : Swift::Equatable, Swift::Sendable {
+  case permissionRequired(permission: MicroblinkPlatformEngine::RequiredPermission, step: MicroblinkPlatformEngine::Step, engineStep: MicroblinkPlatformEngine::EngineStepType)
+  public static func == (a: MicroblinkPlatformEngine::StepBlocker, b: MicroblinkPlatformEngine::StepBlocker) -> Swift::Bool
+}
+public enum RequiredPermission : Swift::Equatable, Swift::Sendable {
+  case camera(shouldShowRationale: Swift::Bool)
+  public static func == (a: MicroblinkPlatformEngine::RequiredPermission, b: MicroblinkPlatformEngine::RequiredPermission) -> Swift::Bool
+}
+public enum StepResult : Swift::Equatable, Swift::Sendable {
+  case ready(transactionId: Swift::String, workflow: MicroblinkPlatformEngine::WorkflowProgress, action: MicroblinkPlatformEngine::StepAction, lastStepOutput: MicroblinkPlatformEngine::StepOutput?)
+  case blocked(transactionId: Swift::String, workflow: MicroblinkPlatformEngine::WorkflowProgress, blocker: MicroblinkPlatformEngine::StepBlocker)
+  case failed(transactionId: Swift::String?, workflow: MicroblinkPlatformEngine::WorkflowProgress?, error: MicroblinkPlatformEngine::EngineError, recoverable: Swift::Bool, retryAction: MicroblinkPlatformEngine::RetryAction?)
+  case finished(transactionId: Swift::String?, workflow: MicroblinkPlatformEngine::WorkflowProgress?, outcome: MicroblinkPlatformEngine::SessionOutcome, lastStepOutput: MicroblinkPlatformEngine::StepOutput?)
+  public static func == (a: MicroblinkPlatformEngine::StepResult, b: MicroblinkPlatformEngine::StepResult) -> Swift::Bool
+}
+public enum StepInput : Swift::Equatable, Swift::Sendable {
+  case none
+  case formSubmission([MicroblinkPlatformEngine::FormFieldValue])
+  case uploadIdDocument(front: MicroblinkPlatformEngine::UploadFile, back: MicroblinkPlatformEngine::UploadFile?)
+  case uploadNonIdDocument(documentType: Swift::String?, file: MicroblinkPlatformEngine::UploadFile)
+  public static func == (a: MicroblinkPlatformEngine::StepInput, b: MicroblinkPlatformEngine::StepInput) -> Swift::Bool
+}
+public enum UploadValidation {
+  public static let maximumByteCount: Swift::Int
+  public static func rejection(byteCount: Swift::Int, header: Foundation::Data, allowedContentTypes: [Swift::String], maximumByteCount: Swift::Int = UploadValidation.maximumByteCount) -> MicroblinkPlatformEngine::UploadInputErrorReason?
+}
+public enum InteractiveStepType : Swift::Equatable, Swift::Sendable {
+  case verifyDocument
+  case documentScan
+  case faceCapture
+  case cardScan
+  case form
+  case uploadIDDocument
+  case uploadNonIDDocument
+  public static func == (a: MicroblinkPlatformEngine::InteractiveStepType, b: MicroblinkPlatformEngine::InteractiveStepType) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct Step : Swift::Equatable, Swift::Sendable {
+  public var id: Swift::Int
+  public var type: MicroblinkPlatformEngine::InteractiveStepType
+  public var name: Swift::String?
+  public var description: Swift::String?
+  public var isCompleted: Swift::Bool
+  public var isCurrent: Swift::Bool
+  public var attemptCount: Swift::Int
+  public var isSecondOfSameKind: Swift::Bool
+  public var interactiveIndex: Swift::Int?
+  public init(id: Swift::Int, type: MicroblinkPlatformEngine::InteractiveStepType, name: Swift::String?, description: Swift::String?, isCompleted: Swift::Bool, isCurrent: Swift::Bool, attemptCount: Swift::Int, isSecondOfSameKind: Swift::Bool, interactiveIndex: Swift::Int?)
+  public static func == (a: MicroblinkPlatformEngine::Step, b: MicroblinkPlatformEngine::Step) -> Swift::Bool
+}
+public struct WorkflowProgress : Swift::Equatable, Swift::Sendable {
+  public var stepCount: Swift::Int?
+  public var interactiveStepCount: Swift::Int?
+  public var hasConditionalInteractiveStep: Swift::Bool
+  public var isKioskModeEnabled: Swift::Bool
+  public var steps: [MicroblinkPlatformEngine::Step]
+  public var currentStepId: Swift::Int?
+  public var completedStepIds: [Swift::Int]
+  public init(stepCount: Swift::Int?, interactiveStepCount: Swift::Int?, hasConditionalInteractiveStep: Swift::Bool, isKioskModeEnabled: Swift::Bool, steps: [MicroblinkPlatformEngine::Step], currentStepId: Swift::Int?, completedStepIds: [Swift::Int])
+  public static func == (a: MicroblinkPlatformEngine::WorkflowProgress, b: MicroblinkPlatformEngine::WorkflowProgress) -> Swift::Bool
+}
+public enum MicroblinkPlatformEngine {
+  public static var clientSdkVersion: Swift::String {
+    get
+  }
+  @_Concurrency::MainActor public static func startSession(_ configuration: MicroblinkPlatformEngine::EngineConfiguration) async -> Swift::Result<MicroblinkPlatformEngine::SessionStart, MicroblinkPlatformEngine::SessionStartError>
+}
+extension MicroblinkPlatformEngine::ScannerPresentation : Swift::Sendable {}
+extension MicroblinkPlatformEngine::StepValidationReason : Swift::Hashable {}
+extension MicroblinkPlatformEngine::HostInputKind : Swift::Hashable {}
+extension MicroblinkPlatformEngine::FormFieldErrorReason : Swift::Hashable {}
+extension MicroblinkPlatformEngine::UploadInputErrorReason : Swift::Hashable {}
+extension MicroblinkPlatformEngine::EngineStepType : Swift::Hashable {}
+extension MicroblinkPlatformEngine::EngineStepStatus : Swift::Hashable {}
+extension MicroblinkPlatformEngine::TextSubtype : Swift::Hashable {}
+extension MicroblinkPlatformEngine::NumberSubtype : Swift::Hashable {}
+extension MicroblinkPlatformEngine::DateTimeSubtype : Swift::Hashable {}
+extension MicroblinkPlatformEngine::FileSubtype : Swift::Hashable {}
+extension MicroblinkPlatformEngine::VerificationState : Swift::Hashable {}
+extension MicroblinkPlatformEngine::CancelReason : Swift::Hashable {}
+extension MicroblinkPlatformEngine::InteractiveStepType : Swift::Hashable {}

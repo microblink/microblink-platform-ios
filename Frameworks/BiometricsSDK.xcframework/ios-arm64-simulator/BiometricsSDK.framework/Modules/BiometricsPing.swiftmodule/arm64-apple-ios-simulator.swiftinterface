@@ -1,0 +1,501 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name BiometricsPing -package-name biometrics_sdk_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import BiometricsCore
+import BiometricsDiagnostics
+import CoreData
+import Foundation
+import Network
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers public actor PingManager {
+  public static let shared: BiometricsPing::PingManager
+  public func add<P>(_ pinglet: P, sessionNumber: Swift::Int) where P : BiometricsPing::Pinglet
+  @discardableResult
+  public func sendPinglets() async -> BiometricsPing::PingStatus
+  @objc deinit
+  @_semantics("defaultActor") nonisolated final public var unownedExecutor: _Concurrency::UnownedSerialExecutor {
+    get
+  }
+}
+public protocol Pinglet : Swift::Decodable, Swift::Encodable, Swift::Sendable {
+  static var schemaName: Swift::String { get }
+  static var schemaVersion: Swift::String { get }
+}
+public enum PingStatus : Swift::Sendable {
+  case success
+  case failure(any Swift::Error)
+  case networkUnavailable
+  case pingNotEnabled
+  case notActivated
+}
+public struct CameraHardwareInfoPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let availableCameras: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::AvailableCamerasItem]
+  public init(availableCameras: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::AvailableCamerasItem])
+  public struct AvailableCamerasItem : Swift::Codable, Swift::Sendable {
+    public let deviceId: Swift::String
+    public let cameraFacing: BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing
+    public let focus: BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus?
+    public let availableResolutions: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::AvailableResolutionsItem]?
+    public init(deviceId: Swift::String, cameraFacing: BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing, focus: BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus? = nil, availableResolutions: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::AvailableResolutionsItem]? = nil)
+    public func encode(to encoder: any Swift::Encoder) throws
+    public init(from decoder: any Swift::Decoder) throws
+  }
+  public struct AvailableResolutionsItem : Swift::Codable, Swift::Sendable {
+    public let width: Swift::Int64
+    public let height: Swift::Int64
+    public init(width: Swift::Int64, height: Swift::Int64)
+    public func encode(to encoder: any Swift::Encoder) throws
+    public init(from decoder: any Swift::Decoder) throws
+  }
+  public enum CameraFacing : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case front
+    case back
+    case unknown
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum Focus : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case auto
+    case fixed
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct CameraInputInfoPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let deviceId: Swift::String
+  public let cameraFacing: BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing
+  public let cameraFrameWidth: Swift::Int64
+  public let cameraFrameHeight: Swift::Int64
+  public let roiWidth: Swift::Int64
+  public let roiHeight: Swift::Int64
+  public let viewPortAspectRatio: Swift::Double
+  public init(deviceId: Swift::String, cameraFacing: BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing, cameraFrameWidth: Swift::Int64, cameraFrameHeight: Swift::Int64, roiWidth: Swift::Int64, roiHeight: Swift::Int64, viewPortAspectRatio: Swift::Double)
+  public enum CameraFacing : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case front
+    case back
+    case unknown
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct CameraPermissionPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let eventType: BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType
+  public let cameraPermissionGranted: Swift::Bool?
+  public init(eventType: BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType, cameraPermissionGranted: Swift::Bool? = nil)
+  public enum EventType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case camerapermissioncheck
+    case camerapermissionrequest
+    case camerapermissionuserresponse
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct ErrorPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let errorType: BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType
+  public let errorMessage: Swift::String
+  public let stackTrace: Swift::String?
+  public init(errorType: BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType, errorMessage: Swift::String, stackTrace: Swift::String? = nil)
+  public enum ErrorType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case nonfatal
+    case crash
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct LogPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let logLevel: BiometricsPing::LogPinglet.BiometricsPing::LogLevel
+  public let logMessage: Swift::String
+  public init(logLevel: BiometricsPing::LogPinglet.BiometricsPing::LogLevel, logMessage: Swift::String)
+  public enum LogLevel : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case info
+    case warning
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::LogPinglet.BiometricsPing::LogLevel]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::LogPinglet.BiometricsPing::LogLevel] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct ScanningConditionsPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let updateType: BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType
+  public let deviceOrientation: BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation?
+  public let flashlightOn: Swift::Bool?
+  public init(updateType: BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType, deviceOrientation: BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation? = nil, flashlightOn: Swift::Bool? = nil)
+  public enum UpdateType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case deviceorientation
+    case flashlightstate
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum DeviceOrientation : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case portrait
+    case landscaperight
+    case landscapeleft
+    case portraitupside
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct SdkInitStartPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public static let sessionNumber: Swift::Int
+  public let product: BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product
+  public let platform: BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform
+  public let platformDetails: BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails?
+  public let packageName: Swift::String
+  public let userId: Swift::String
+  public let pingProxyEnabled: Swift::Bool
+  public let baltazarProxyEnabled: Swift::Bool
+  public init(product: BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product, platform: BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform, platformDetails: BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails? = nil, packageName: Swift::String, userId: Swift::String, pingProxyEnabled: Swift::Bool, baltazarProxyEnabled: Swift::Bool)
+  public enum Product : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case blinkcard
+    case blinkid
+    case blinkinput
+    case capture
+    case documentverification
+    case pdf417mobi
+    case photopay
+    case biometrics
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum Platform : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case ios
+    case android
+    case emscripten
+    case macos
+    case linux
+    case windows
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum PlatformDetails : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case simd
+    case simdThreads
+    case simdRelaxed
+    case simdRelaxedThreads
+    case lightweightSimd
+    case lightweightSimdThreads
+    case lightweightSimdRelaxed
+    case lightweightSimdRelaxedThreads
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct UploadPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let sessionId: Swift::String
+  public let eventType: BiometricsPing::UploadPinglet.BiometricsPing::EventType
+  public let durationMs: Swift::Double?
+  public let payloadBytes: Swift::Int64?
+  public let errorCategory: Swift::String?
+  public let retryCount: Swift::Int64?
+  public init(sessionId: Swift::String, eventType: BiometricsPing::UploadPinglet.BiometricsPing::EventType, durationMs: Swift::Double? = nil, payloadBytes: Swift::Int64? = nil, errorCategory: Swift::String? = nil, retryCount: Swift::Int64? = nil)
+  public enum EventType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case initialized
+    case completed
+    case failed
+    case retryinitialized
+    case cancelled
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UploadPinglet.BiometricsPing::EventType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UploadPinglet.BiometricsPing::EventType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct UxEventPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let eventType: BiometricsPing::UxEventPinglet.BiometricsPing::EventType
+  public let errorMessageType: BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType?
+  public let alertType: BiometricsPing::UxEventPinglet.BiometricsPing::AlertType?
+  public let helpCloseType: BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType?
+  public let cameraFailureCategory: Swift::String?
+  public let closeReason: BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason?
+  public init(eventType: BiometricsPing::UxEventPinglet.BiometricsPing::EventType, errorMessageType: BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType? = nil, alertType: BiometricsPing::UxEventPinglet.BiometricsPing::AlertType? = nil, helpCloseType: BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType? = nil, cameraFailureCategory: Swift::String? = nil, closeReason: BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason? = nil)
+  public enum EventType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case camerastarted
+    case cameraclosed
+    case onboardinginfodisplayed
+    case closebuttonclicked
+    case helptooltipdisplayed
+    case helpopened
+    case helpclosed
+    case alertdisplayed
+    case errormessage
+    case steptimeout
+    case appmovedtobackground
+    case inactivitytimeout
+    case unsupportedbarcodetimeout
+    case cameraopenfailed
+    case facecapturescreendisplayed
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UxEventPinglet.BiometricsPing::EventType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UxEventPinglet.BiometricsPing::EventType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum ErrorMessageType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case movecloser
+    case movefarther
+    case keepvisible
+    case flipside
+    case aligndocument
+    case movefromedge
+    case increaselighting
+    case decreaselighting
+    case eliminateblur
+    case eliminateglare
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum AlertType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case invalidlicensekey
+    case networkerror
+    case documentclassnotallowed
+    case steptimeout
+    case documentnotsupported
+    case inactivitytimeout
+    case unsupportedbarcodetimeout
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UxEventPinglet.BiometricsPing::AlertType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UxEventPinglet.BiometricsPing::AlertType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum HelpCloseType : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case contentskipped
+    case contentfullyviewed
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public enum CloseReason : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case user
+    case sdk
+    case systemerror
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct WrapperProductInfoPinglet : BiometricsPing::Pinglet {
+  public static let schemaName: Swift::String
+  public static let schemaVersion: Swift::String
+  public let wrapperProduct: BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct
+  public let correlationId: Swift::String?
+  public init(wrapperProduct: BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct, correlationId: Swift::String? = nil)
+  public enum WrapperProduct : Swift::String, Swift::Codable, Swift::CaseIterable, Swift::Sendable {
+    case crossplatformflutter
+    case crossplatformreactnative
+    case identityverification
+    public init?(rawValue: Swift::String)
+    public typealias AllCases = [BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct]
+    public typealias RawValue = Swift::String
+    nonisolated public static var allCases: [BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct] {
+      get
+    }
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing : Swift::Equatable {}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing : Swift::Hashable {}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::CameraFacing : Swift::RawRepresentable {}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus : Swift::Equatable {}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus : Swift::Hashable {}
+extension BiometricsPing::CameraHardwareInfoPinglet.BiometricsPing::Focus : Swift::RawRepresentable {}
+extension BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing : Swift::Equatable {}
+extension BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing : Swift::Hashable {}
+extension BiometricsPing::CameraInputInfoPinglet.BiometricsPing::CameraFacing : Swift::RawRepresentable {}
+extension BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType : Swift::Equatable {}
+extension BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType : Swift::Hashable {}
+extension BiometricsPing::CameraPermissionPinglet.BiometricsPing::EventType : Swift::RawRepresentable {}
+extension BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType : Swift::Equatable {}
+extension BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType : Swift::Hashable {}
+extension BiometricsPing::ErrorPinglet.BiometricsPing::ErrorType : Swift::RawRepresentable {}
+extension BiometricsPing::LogPinglet.BiometricsPing::LogLevel : Swift::Equatable {}
+extension BiometricsPing::LogPinglet.BiometricsPing::LogLevel : Swift::Hashable {}
+extension BiometricsPing::LogPinglet.BiometricsPing::LogLevel : Swift::RawRepresentable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType : Swift::Equatable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType : Swift::Hashable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::UpdateType : Swift::RawRepresentable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation : Swift::Equatable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation : Swift::Hashable {}
+extension BiometricsPing::ScanningConditionsPinglet.BiometricsPing::DeviceOrientation : Swift::RawRepresentable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product : Swift::Equatable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product : Swift::Hashable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Product : Swift::RawRepresentable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform : Swift::Equatable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform : Swift::Hashable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::Platform : Swift::RawRepresentable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails : Swift::Equatable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails : Swift::Hashable {}
+extension BiometricsPing::SdkInitStartPinglet.BiometricsPing::PlatformDetails : Swift::RawRepresentable {}
+extension BiometricsPing::UploadPinglet.BiometricsPing::EventType : Swift::Equatable {}
+extension BiometricsPing::UploadPinglet.BiometricsPing::EventType : Swift::Hashable {}
+extension BiometricsPing::UploadPinglet.BiometricsPing::EventType : Swift::RawRepresentable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::EventType : Swift::Equatable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::EventType : Swift::Hashable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::EventType : Swift::RawRepresentable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType : Swift::Equatable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType : Swift::Hashable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::ErrorMessageType : Swift::RawRepresentable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::AlertType : Swift::Equatable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::AlertType : Swift::Hashable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::AlertType : Swift::RawRepresentable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType : Swift::Equatable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType : Swift::Hashable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::HelpCloseType : Swift::RawRepresentable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason : Swift::Equatable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason : Swift::Hashable {}
+extension BiometricsPing::UxEventPinglet.BiometricsPing::CloseReason : Swift::RawRepresentable {}
+extension BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct : Swift::Equatable {}
+extension BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct : Swift::Hashable {}
+extension BiometricsPing::WrapperProductInfoPinglet.BiometricsPing::WrapperProduct : Swift::RawRepresentable {}

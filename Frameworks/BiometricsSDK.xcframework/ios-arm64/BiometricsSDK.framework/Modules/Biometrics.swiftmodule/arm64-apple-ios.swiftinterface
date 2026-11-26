@@ -1,0 +1,120 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -language-mode 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name Biometrics -package-name biometrics_sdk_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
+import AVFoundation
+import BiometricsCore
+@_exported import BiometricsCore/*.BiometricsError*/
+@_exported import BiometricsCore/*.BiometricsErrorCode*/
+@_exported import BiometricsCore/*.BiometricsErrorType*/
+@_exported import BiometricsCore/*.BiometricsLogLevel*/
+@_exported import BiometricsCore/*.CaptureError*/
+@_exported import BiometricsCore/*.CaptureSignals*/
+@_exported import BiometricsCore/*.FaceImage*/
+@_exported import BiometricsCore/*.FaceLandmarks*/
+@_exported import BiometricsCore/*.FacePoint*/
+@_exported import BiometricsCore/*.SignedFrame*/
+import BiometricsDiagnostics
+import BiometricsEngine
+import BiometricsPing
+@_exported import BiometricsPing/*.PingManager*/
+@_exported import BiometricsPing/*.PingStatus*/
+@_exported import BiometricsPing/*.Pinglet*/
+@_exported import BiometricsPing/*.WrapperProductInfoPinglet*/
+import CoreGraphics
+import CoreImage
+import CoreMedia
+import Foundation
+import ImageIO
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public struct BiometricsSettings : Swift::Sendable {
+  public var licenseKey: Swift::String
+  public var licensee: Swift::String?
+  public var microblinkProxyURL: Foundation::URL?
+  public var logLevel: BiometricsCore::BiometricsLogLevel
+  public init(licenseKey: Swift::String, licensee: Swift::String? = nil, microblinkProxyURL: Foundation::URL? = nil, logLevel: BiometricsCore::BiometricsLogLevel = .warning)
+}
+@_hasMissingDesignatedInitializers final public class BiometricsSdk : Swift::Sendable {
+  public static func create(settings: Biometrics::BiometricsSettings) async throws -> Biometrics::BiometricsSdk
+  final public func createCaptureSession(options: Biometrics::CaptureOptions = CaptureOptions()) async throws -> Biometrics::CaptureSession
+  final public func terminate() async
+  final public func refreshLicenseLease() async throws
+  @objc deinit
+}
+public struct CameraFrame : @unchecked Swift::Sendable {
+  public let sampleBuffer: CoreMedia::CMSampleBuffer
+  public let orientation: ImageIO::CGImagePropertyOrientation
+  public init(sampleBuffer: CoreMedia::CMSampleBuffer, orientation: ImageIO::CGImagePropertyOrientation)
+}
+public enum CaptureEvent : Swift::Sendable {
+  case feedback(Biometrics::CaptureFeedback)
+  case captured(Biometrics::FaceCaptureResult)
+  case timedOut
+  case failed(BiometricsCore::CaptureError)
+}
+public enum CaptureFeedback : Swift::Sendable, Swift::Equatable {
+  case faceNotFound
+  case multipleFaces
+  case faceOK
+  case tooClose
+  case tooFar
+  case pitchOff
+  case yawOff
+  case rollOff
+  case tooCloseToBorder
+  case blurry
+  case tooDark
+  case tooBright
+  case unknown
+  public static func == (a: Biometrics::CaptureFeedback, b: Biometrics::CaptureFeedback) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct CaptureOptions : Swift::Sendable, Swift::Equatable {
+  public var timeout: Swift::Duration
+  public init(timeout: Swift::Duration = .seconds(60))
+  public static func == (a: Biometrics::CaptureOptions, b: Biometrics::CaptureOptions) -> Swift::Bool
+}
+@_hasMissingDesignatedInitializers public actor CaptureSession {
+  nonisolated final public let events: _Concurrency::AsyncStream<Biometrics::CaptureEvent>
+  @objc deinit
+  public func process(_ frame: Biometrics::CameraFrame) async
+  public func stop()
+  @_semantics("defaultActor") nonisolated final public var unownedExecutor: _Concurrency::UnownedSerialExecutor {
+    get
+  }
+}
+public struct CaptureSessionContext : Swift::Sendable, Swift::Hashable {
+  public let traceId: Swift::String
+  public let sessionNumber: Swift::Int
+  public init(traceId: Swift::String, sessionNumber: Swift::Int)
+  public static func == (a: Biometrics::CaptureSessionContext, b: Biometrics::CaptureSessionContext) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+extension Biometrics::FaceCaptureResult {
+  public var livenessMetadata: Swift::String? {
+    get
+  }
+  public var captureFrameMetadata: Swift::String? {
+    get
+  }
+}
+public struct FaceCaptureResult : Swift::Sendable {
+  public let bestImage: BiometricsCore::FaceImage
+  public let captureFrame: BiometricsCore::SignedFrame?
+  public let livenessFrames: [BiometricsCore::SignedFrame]
+  public let livenessBatchSignature: Foundation::Data?
+  public let signatureVersion: Swift::String?
+  public let captureSignals: BiometricsCore::CaptureSignals?
+  public let sessionContext: Biometrics::CaptureSessionContext?
+  public init(bestImage: BiometricsCore::FaceImage, captureFrame: BiometricsCore::SignedFrame? = nil, livenessFrames: [BiometricsCore::SignedFrame] = [], livenessBatchSignature: Foundation::Data? = nil, signatureVersion: Swift::String? = nil, captureSignals: BiometricsCore::CaptureSignals? = nil, sessionContext: Biometrics::CaptureSessionContext? = nil)
+}
+extension Biometrics::CaptureFeedback : Swift::Hashable {}
