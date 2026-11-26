@@ -1,0 +1,325 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "mb_accessibility_success_card_number_side_scanned": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Card number side captured"
+          }
+        }
+      }
+    },
+    "mb_accessibility_success_card_scanned": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Card capture complete"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_blur_detected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold your phone and card steady"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_card_not_fully_visible": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring all four card edges into view"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_first_side_instructions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the side with the card number"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_flashlight_warning_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light reflecting off your card? Gently adjust its angle to clear the glare."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_msg1": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look on both sides for the printed or raised card number. It usually has 16 digits, but may have 12 to 19."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_msg2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep fingers away from the card details and make sure all four edges remain visible. Tilt away any hologram reflections."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_msg3": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avoid direct light on the card. Check that reflections are not hiding any printed details."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_msg4": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the card and phone still so the camera can read the details clearly."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_title1": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with the numbers"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_title2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give every detail room"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_title3": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose softer light"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_help_screen_title4": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause for the capture"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_keep_card_parallel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep your phone flat above the card"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_onboarding_dialog_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find the side with the card number. Place the whole card in view, uncover every detail, and use soft, even light."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_onboarding_dialog_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Card studio: number side first"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_other_side_instructions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn your card over to capture the other side"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_recognition_timeout_dialog_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check the light, show the entire card, and remove reflections before trying another capture."
+          }
+        }
+      }
+    },
+    "mb_blinkcard_recognition_timeout_dialog_retry_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan card again"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_recognition_timeout_dialog_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let’s capture that card again"
+          }
+        }
+      }
+    },
+    "mb_blinkcard_scanning_wrong_side": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn the card over"
+          }
+        }
+      }
+    },
+    "mb_close": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close card capture"
+          }
+        }
+      }
+    },
+    "mb_dialog_back_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous tip"
+          }
+        }
+      }
+    },
+    "mb_dialog_done_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to scan"
+          }
+        }
+      }
+    },
+    "mb_dialog_next_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next tip"
+          }
+        }
+      }
+    },
+    "mb_move_closer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring the card closer"
+          }
+        }
+      }
+    },
+    "mb_move_farther": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move the card farther away"
+          }
+        }
+      }
+    },
+    "mb_need_help_tooltip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Card capture tips"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
